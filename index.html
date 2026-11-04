@@ -17,7 +17,7 @@
       --pink: #ff007f;
       --green: #00ffa3;
       --green-glow: rgba(0, 255, 163, 0.5);
-      --glass-panel: rgba(13, 22, 54, 0.78);
+      --glass-panel: rgba(13, 22, 54, 0.85);
       --glass-border: rgba(0, 243, 255, 0.28);
       --font-sci: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
     }
@@ -44,20 +44,35 @@
       align-items: center;
     }
 
-    /* Khung máy chủ 16:9 tối ưu cho máy chiếu trường học */
+    /* Khung máy chủ tối ưu linh hoạt cho mọi thiết bị (Desktop & Mobile) */
     #game-stage {
       width: 100vw;
-      height: 56.25vw;
+      height: 100vh;
       max-height: 100vh;
-      max-width: 177.78vh;
+      max-width: 100vw;
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       overflow: hidden;
       box-shadow: 0 0 70px rgba(0, 243, 255, 0.2), inset 0 0 100px rgba(10, 16, 45, 0.8);
-      background: rgba(7, 12, 33, 0.9);
-      border: 1.5px solid rgba(0, 243, 255, 0.25);
+      background: rgba(7, 12, 33, 0.95);
+    }
+
+    @media (min-aspect-ratio: 16/9) {
+      #game-stage {
+        width: 177.78vh;
+        height: 100vh;
+        border: 1.5px solid rgba(0, 243, 255, 0.25);
+      }
+    }
+
+    @media (max-aspect-ratio: 16/9) {
+      #game-stage {
+        width: 100vw;
+        height: 56.25vw;
+        max-height: 100vh;
+      }
     }
 
     /* Canvas hiệu ứng Grid Matrix Cybernetic */
@@ -89,7 +104,7 @@
     header {
       position: relative;
       z-index: 20;
-      padding: 12px 28px;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -100,15 +115,15 @@
     .hud-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .ai-quantum-orb {
-      width: 48px;
-      height: 48px;
+      width: 42px;
+      height: 42px;
       border-radius: 12px;
       border: 1.5px solid var(--cyan);
-      box-shadow: 0 0 20px var(--cyan-glow), inset 0 0 10px var(--cyan-glow);
+      box-shadow: 0 0 15px var(--cyan-glow), inset 0 0 8px var(--cyan-glow);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -118,37 +133,37 @@
 
     @keyframes pulseCore {
       0%, 100% { transform: scale(1); border-color: var(--cyan); box-shadow: 0 0 15px var(--cyan-glow); }
-      50% { transform: scale(1.06); border-color: var(--pink); box-shadow: 0 0 26px var(--purple-glow); }
+      50% { transform: scale(1.06); border-color: var(--pink); box-shadow: 0 0 22px var(--purple-glow); }
     }
 
     .title-banner h1 {
-      font-size: 1.35rem;
-      letter-spacing: 2.5px;
+      font-size: 1.15rem;
+      letter-spacing: 1.5px;
       font-weight: 900;
       background: linear-gradient(90deg, #ffffff 0%, var(--cyan) 50%, #d946ef 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-transform: uppercase;
-      text-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+      text-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
     }
 
     .title-banner p {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       color: #94a3b8;
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
       text-transform: uppercase;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .title-banner p span.badge-status {
       display: inline-block;
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 8px var(--green);
+      box-shadow: 0 0 6px var(--green);
       animation: blinkOnline 1.5s infinite;
     }
 
@@ -159,27 +174,27 @@
 
     .hud-center {
       flex: 1;
-      max-width: 280px;
-      margin: 0 24px;
+      max-width: 240px;
+      margin: 0 16px;
     }
 
     .metric-progress-top {
       display: flex;
       justify-content: space-between;
-      font-size: 0.7rem;
-      margin-bottom: 5px;
+      font-size: 0.65rem;
+      margin-bottom: 4px;
       color: var(--cyan);
       font-weight: 800;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
     }
 
     .energy-bar-track {
-      height: 9px;
+      height: 8px;
       background: rgba(15, 23, 42, 0.8);
-      border-radius: 5px;
+      border-radius: 4px;
       overflow: hidden;
       border: 1px solid rgba(0, 243, 255, 0.35);
-      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.8);
       position: relative;
     }
 
@@ -187,36 +202,36 @@
       height: 100%;
       width: 5%;
       background: linear-gradient(90deg, var(--cyan), #3b82f6, var(--pink));
-      box-shadow: 0 0 14px var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
       transition: width 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
     }
 
     .hud-right {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 10px;
     }
 
     .hud-pod {
       background: var(--glass-panel);
       border: 1px solid var(--glass-border);
-      border-radius: 10px;
-      padding: 6px 16px;
-      min-width: 95px;
+      border-radius: 8px;
+      padding: 5px 12px;
+      min-width: 80px;
       text-align: center;
       backdrop-filter: blur(10px);
-      box-shadow: inset 0 0 12px rgba(0, 243, 255, 0.1);
+      box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.1);
     }
 
     .hud-pod .pod-label {
-      font-size: 0.65rem;
+      font-size: 0.58rem;
       color: #7dd3fc;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.5px;
     }
 
     .hud-pod .pod-value {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: 900;
       color: #fff;
       font-feature-settings: "tnum";
@@ -224,28 +239,28 @@
 
     .hud-btns {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
 
     .cyber-btn-icon {
       background: rgba(15, 23, 42, 0.75);
       border: 1.2px solid rgba(0, 243, 255, 0.4);
       color: var(--cyan);
-      border-radius: 9px;
-      width: 40px;
-      height: 40px;
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1rem;
       transition: all 0.25s ease;
     }
 
     .cyber-btn-icon:hover {
       background: var(--cyan);
       color: #070919;
-      box-shadow: 0 0 18px var(--cyan);
+      box-shadow: 0 0 15px var(--cyan);
       transform: translateY(-2px);
     }
 
@@ -256,21 +271,23 @@
       position: relative;
       z-index: 20;
       width: 100%;
-      height: 53%;
+      height: 52%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: 0 16px;
     }
 
     /* Máy quét laze Hologram dọc trên băng chuyền */
     .hologram-scanner {
       position: absolute;
-      top: 6%;
-      width: 580px;
-      height: 4px;
+      top: 4%;
+      width: 540px;
+      max-width: 90%;
+      height: 3px;
       background: linear-gradient(90deg, transparent, var(--cyan), #fff, var(--cyan), transparent);
-      box-shadow: 0 0 30px var(--cyan), 0 0 10px #fff;
+      box-shadow: 0 0 25px var(--cyan), 0 0 8px #fff;
       border-radius: 2px;
       pointer-events: none;
       z-index: 30;
@@ -279,19 +296,19 @@
 
     @keyframes scanThrough {
       0%, 100% { transform: translateY(0px) scaleX(0.7); opacity: 0.25; }
-      50% { transform: translateY(200px) scaleX(1); opacity: 0.95; }
+      50% { transform: translateY(160px) scaleX(1); opacity: 0.95; }
     }
 
     /* Hiển thị Combo liên hoàn nổi bật */
     .combo-hologram-banner {
       position: absolute;
-      top: 8%;
-      right: 9%;
-      font-size: 2.3rem;
+      top: 6%;
+      right: 8%;
+      font-size: 2rem;
       font-weight: 900;
       font-style: italic;
       color: #ffffff;
-      text-shadow: 0 0 25px var(--pink), 0 0 45px var(--purple);
+      text-shadow: 0 0 20px var(--pink), 0 0 35px var(--purple);
       pointer-events: none;
       z-index: 70;
       transform: scale(0) rotate(15deg);
@@ -308,15 +325,15 @@
     .conveyor-card {
       position: relative;
       z-index: 40;
-      width: 580px;
-      max-width: 88%;
-      min-height: 220px;
-      background: linear-gradient(135deg, rgba(16, 26, 65, 0.9) 0%, rgba(8, 14, 42, 0.95) 100%);
+      width: 620px;
+      max-width: 95%;
+      min-height: 200px;
+      background: linear-gradient(135deg, rgba(16, 26, 65, 0.92) 0%, rgba(8, 14, 42, 0.96) 100%);
       border: 2px solid var(--cyan);
-      border-radius: 22px;
+      border-radius: 20px;
       backdrop-filter: blur(14px);
-      box-shadow: 0 0 40px rgba(0, 243, 255, 0.28), inset 0 0 25px rgba(0, 243, 255, 0.12);
-      padding: 18px 24px;
+      box-shadow: 0 0 35px rgba(0, 243, 255, 0.28), inset 0 0 20px rgba(0, 243, 255, 0.12);
+      padding: 16px 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -331,8 +348,8 @@
 
     .conveyor-card.dragging {
       opacity: 0.93;
-      transform: scale(1.05) rotate(-1.5deg);
-      box-shadow: 0 0 55px var(--cyan), inset 0 0 35px var(--purple);
+      transform: scale(1.04) rotate(-1deg);
+      box-shadow: 0 0 50px var(--cyan), inset 0 0 30px var(--purple);
       border-color: #ffffff;
       z-index: 1000;
       pointer-events: none;
@@ -342,44 +359,44 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .tag-dish {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 900;
       color: #070919;
       background: var(--cyan);
-      padding: 4px 12px;
-      border-radius: 20px;
-      letter-spacing: 1.2px;
+      padding: 3px 10px;
+      border-radius: 16px;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      box-shadow: 0 0 12px var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .tag-topic {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 800;
       color: var(--gold);
-      text-shadow: 0 0 10px var(--gold-glow);
-      letter-spacing: 0.8px;
+      text-shadow: 0 0 8px var(--gold-glow);
+      letter-spacing: 0.6px;
     }
 
     .question-content {
-      font-size: 1.15rem;
-      line-height: 1.55;
+      font-size: 1.05rem;
+      line-height: 1.5;
       color: #f8fafc;
       font-weight: 600;
       text-align: center;
-      margin: 10px 0;
+      margin: 8px 0;
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
     }
 
     .question-content b, .question-content strong {
@@ -391,13 +408,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      font-size: 0.76rem;
+      gap: 6px;
+      font-size: 0.72rem;
       color: #94a3b8;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
       border-top: 1px dashed rgba(0, 243, 255, 0.25);
-      padding-top: 8px;
+      padding-top: 6px;
       font-weight: 700;
     }
 
@@ -408,21 +425,21 @@
 
     @keyframes floatDown {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(4px); }
+      50% { transform: translateY(3px); }
     }
 
     /* Ray kim loại băng chuyền tương lai */
     .conveyor-track {
       position: absolute;
-      bottom: 19%;
-      width: 95%;
-      height: 32px;
+      bottom: 16%;
+      width: 94%;
+      height: 28px;
       background: linear-gradient(180deg, #1e293b 0%, #0f172a 50%, #030712 100%);
       border: 1.5px solid rgba(0, 243, 255, 0.35);
-      border-radius: 16px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 243, 255, 0.18);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 243, 255, 0.18);
       overflow: hidden;
     }
 
@@ -432,23 +449,23 @@
       height: 4px;
       top: 50%;
       transform: translateY(-50%);
-      background: repeating-linear-gradient(90deg, var(--cyan) 0px, var(--cyan) 28px, transparent 28px, transparent 56px);
-      box-shadow: 0 0 12px var(--cyan);
+      background: repeating-linear-gradient(90deg, var(--cyan) 0px, var(--cyan) 24px, transparent 24px, transparent 48px);
+      box-shadow: 0 0 10px var(--cyan);
       animation: runBelt 3.2s linear infinite;
     }
 
     @keyframes runBelt {
       0% { transform: translate(0, -50%); }
-      100% { transform: translate(-56px, -50%); }
+      100% { transform: translate(-48px, -50%); }
     }
 
     /* Hiệu ứng hạt điểm nổi lên (+10, +15, +25) */
     .score-floating-pop {
       position: absolute;
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 900;
       color: var(--gold);
-      text-shadow: 0 0 18px var(--gold-glow);
+      text-shadow: 0 0 15px var(--gold-glow);
       pointer-events: none;
       z-index: 150;
       animation: scoreRise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -456,8 +473,8 @@
 
     @keyframes scoreRise {
       0% { opacity: 0; transform: translateY(0) scale(0.6); }
-      35% { opacity: 1; transform: translateY(-30px) scale(1.2); }
-      100% { opacity: 0; transform: translateY(-75px) scale(1); }
+      35% { opacity: 1; transform: translateY(-25px) scale(1.1); }
+      100% { opacity: 0; transform: translateY(-65px) scale(1); }
     }
 
     /* =================================================================
@@ -467,41 +484,41 @@
       position: relative;
       z-index: 20;
       width: 100%;
-      height: 38%;
-      padding: 0 26px 18px 26px;
+      height: 40%;
+      padding: 0 20px 16px 20px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      gap: 12px;
       align-items: stretch;
     }
 
     .energy-portal {
       position: relative;
-      background: linear-gradient(180deg, rgba(10, 20, 52, 0.65) 0%, rgba(5, 10, 28, 0.95) 100%);
-      border: 2px solid rgba(0, 243, 255, 0.28);
-      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(10, 20, 52, 0.75) 0%, rgba(5, 10, 28, 0.95) 100%);
+      border: 2px solid rgba(0, 243, 255, 0.3);
+      border-radius: 18px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 14px;
+      padding: 12px;
       cursor: pointer;
       backdrop-filter: blur(12px);
       transition: all 0.25s ease;
       overflow: hidden;
-      box-shadow: inset 0 0 15px rgba(0, 243, 255, 0.08);
+      box-shadow: inset 0 0 12px rgba(0, 243, 255, 0.08);
     }
 
     .portal-ring-outer {
       position: absolute;
-      top: -24px;
-      width: 130px;
-      height: 130px;
+      top: -20px;
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
       border: 2px dashed rgba(0, 243, 255, 0.3);
       animation: spinPortal 14s linear infinite;
       pointer-events: none;
-      opacity: 0.55;
+      opacity: 0.5;
     }
 
     @keyframes spinPortal {
@@ -515,7 +532,7 @@
       left: 10%;
       right: 10%;
       height: 50%;
-      background: linear-gradient(0deg, rgba(0, 243, 255, 0.16) 0%, transparent 100%);
+      background: linear-gradient(0deg, rgba(0, 243, 255, 0.14) 0%, transparent 100%);
       opacity: 0.4;
       pointer-events: none;
       transition: opacity 0.3s, height 0.3s;
@@ -523,9 +540,9 @@
 
     .energy-portal:hover,
     .energy-portal.drag-target-hover {
-      transform: translateY(-8px);
+      transform: translateY(-6px);
       border-color: #ffffff;
-      box-shadow: 0 0 40px var(--cyan), inset 0 0 30px rgba(0, 243, 255, 0.35);
+      box-shadow: 0 0 35px var(--cyan), inset 0 0 25px rgba(0, 243, 255, 0.35);
     }
 
     .energy-portal.drag-target-hover .portal-upbeam {
@@ -535,32 +552,32 @@
     }
 
     .portal-header-pill {
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       font-weight: 900;
-      padding: 3px 12px;
-      border-radius: 14px;
+      padding: 3px 10px;
+      border-radius: 12px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       border: 1px solid;
       z-index: 2;
     }
 
     .portal-text-zone {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 800;
       color: #ffffff;
       text-align: center;
-      line-height: 1.4;
+      line-height: 1.35;
       margin: auto 0;
-      padding: 6px;
-      text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+      padding: 4px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
       z-index: 2;
     }
 
     .portal-footer-status {
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       color: #64748b;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
       font-weight: 700;
       z-index: 2;
@@ -586,7 +603,7 @@
     .portal-alert-shake {
       animation: alertShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
       border-color: #ff3366 !important;
-      box-shadow: 0 0 40px rgba(255, 51, 102, 0.7) !important;
+      box-shadow: 0 0 35px rgba(255, 51, 102, 0.7) !important;
     }
 
     @keyframes alertShake {
@@ -606,7 +623,7 @@
       width: 100%;
       height: 100%;
       background: rgba(4, 8, 24, 0.88);
-      backdrop-filter: blur(18px);
+      backdrop-filter: blur(16px);
       z-index: 200;
       display: flex;
       align-items: center;
@@ -614,6 +631,7 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
+      padding: 16px;
     }
 
     .modal-backdrop.active {
@@ -622,17 +640,19 @@
     }
 
     .cyber-dialog-box {
-      width: 680px;
-      max-width: 92%;
+      width: 620px;
+      max-width: 95%;
       background: linear-gradient(145deg, #0f1938 0%, #060b1c 100%);
       border: 2px solid var(--cyan);
-      border-radius: 26px;
-      padding: 30px;
-      box-shadow: 0 0 60px rgba(0, 243, 255, 0.32);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 0 50px rgba(0, 243, 255, 0.32);
       position: relative;
       text-align: center;
       transform: scale(0.9);
       transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .modal-backdrop.active .cyber-dialog-box {
@@ -641,20 +661,20 @@
 
     .dialog-status-tag {
       display: inline-block;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 900;
-      padding: 5px 20px;
-      border-radius: 20px;
-      margin-bottom: 12px;
+      padding: 4px 16px;
+      border-radius: 16px;
+      margin-bottom: 10px;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
     }
 
     .tag-correct {
       background: rgba(0, 255, 163, 0.15);
       border: 1.5px solid var(--green);
       color: var(--green);
-      box-shadow: 0 0 16px rgba(0, 255, 163, 0.35);
+      box-shadow: 0 0 14px rgba(0, 255, 163, 0.35);
     }
 
     .tag-retry {
@@ -666,14 +686,14 @@
     .dialog-explanation {
       background: rgba(15, 23, 42, 0.75);
       border: 1px solid rgba(0, 243, 255, 0.25);
-      border-radius: 16px;
-      padding: 18px 22px;
+      border-radius: 14px;
+      padding: 14px 18px;
       text-align: left;
-      font-size: 0.95rem;
-      line-height: 1.65;
+      font-size: 0.9rem;
+      line-height: 1.6;
       color: #cbd5e1;
-      margin: 18px 0;
-      max-height: 240px;
+      margin: 14px 0;
+      max-height: 200px;
       overflow-y: auto;
     }
 
@@ -685,74 +705,124 @@
       background: linear-gradient(90deg, var(--cyan) 0%, #0099ff 100%);
       color: #040817;
       font-weight: 900;
-      font-size: 1rem;
+      font-size: 0.95rem;
       border: none;
-      padding: 13px 40px;
-      border-radius: 35px;
+      padding: 12px 32px;
+      border-radius: 30px;
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      box-shadow: 0 0 28px var(--cyan);
+      letter-spacing: 1.2px;
+      box-shadow: 0 0 24px var(--cyan);
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .cyber-btn-launch:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 45px var(--cyan);
+      box-shadow: 0 0 40px var(--cyan);
     }
 
     /* Màn hình tổng kết (Mission Complete) */
     .summary-matrix {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin: 22px 0;
+      gap: 12px;
+      margin: 18px 0;
     }
 
     .summary-box {
       background: rgba(30, 41, 59, 0.55);
       border: 1px solid rgba(0, 243, 255, 0.22);
-      border-radius: 14px;
-      padding: 14px;
+      border-radius: 12px;
+      padding: 12px;
     }
 
     .summary-box .val {
-      font-size: 1.7rem;
+      font-size: 1.4rem;
       font-weight: 900;
       color: #fff;
     }
 
     .summary-box .lbl {
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       color: #94a3b8;
       text-transform: uppercase;
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     .rank-trophy-title {
-      font-size: 1.45rem;
+      font-size: 1.25rem;
       font-weight: 900;
       color: var(--gold);
-      text-shadow: 0 0 25px var(--gold-glow);
-      margin: 12px 0;
-      letter-spacing: 1.2px;
+      text-shadow: 0 0 20px var(--gold-glow);
+      margin: 10px 0;
+      letter-spacing: 1px;
     }
 
-    /* Responsive cho màn hình dưới 950px */
-    @media (max-width: 950px) {
-      .portals-matrix {
-        grid-template-columns: repeat(2, 1fr);
-        height: 44%;
+    /* =================================================================
+       TỐI ƯU ĐẶC BIỆT CHO ĐIỆN THOẠI DI ĐỘNG & MÀN HÌNH DỌC (PORTRAIT)
+    ==================================================================== */
+    @media (max-width: 850px) {
+      header {
+        padding: 8px 12px;
       }
-      .conveyor-zone { height: 46%; }
-      .conveyor-card { width: 92%; min-height: 180px; padding: 14px 18px; }
-      .question-content { font-size: 1rem; }
-      .title-banner h1 { font-size: 1.1rem; }
-      .hud-pod { min-width: 75px; padding: 4px 10px; }
-      .hud-pod .pod-value { font-size: 1.1rem; }
+      .hud-center {
+        display: none; /* Ẩn bớt thanh tiến trình phụ trên màn hình nhỏ để nhường chỗ */
+      }
+      .title-banner h1 {
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+      }
+      .title-banner p {
+        font-size: 0.58rem;
+      }
+      .ai-quantum-orb {
+        width: 36px;
+        height: 36px;
+      }
+      .hud-pod {
+        min-width: 65px;
+        padding: 4px 8px;
+      }
+      .hud-pod .pod-value {
+        font-size: 0.95rem;
+      }
+      .conveyor-zone {
+        height: 48%;
+      }
+      .conveyor-card {
+        width: 96%;
+        min-height: 170px;
+        padding: 12px 14px;
+      }
+      .question-content {
+        font-size: 0.95rem;
+        line-height: 1.4;
+      }
+      /* Tự động chuyển 4 cổng thành lưới 2x2 cực kỳ rõ ràng trên điện thoại */
+      .portals-matrix {
+        height: 44%;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 10px;
+        padding: 0 12px 12px 12px;
+      }
+      .energy-portal {
+        padding: 10px;
+      }
+      .portal-text-zone {
+        font-size: 0.88rem;
+        line-height: 1.25;
+      }
+      .portal-header-pill {
+        font-size: 0.58rem;
+        padding: 2px 6px;
+      }
+      .portal-ring-outer {
+        display: none; /* Ẩn vòng quay phụ trên mobile để giao diện sạch sẽ */
+      }
     }
   </style>
 </head>
@@ -774,7 +844,7 @@
     <header>
       <div class="hud-left">
         <div class="ai-quantum-orb">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="12 2 2 7 12 12 22 7 12 2" stroke="#00f3ff"></polygon>
             <polyline points="2 17 12 22 22 17" stroke="#b5179e"></polyline>
             <polyline points="2 12 12 17 22 12" stroke="#00f3ff"></polyline>
@@ -782,7 +852,7 @@
         </div>
         <div class="title-banner">
           <h1>LẨU BĂNG CHUYỀN TOÁN HỌC 5.0</h1>
-          <p><span class="badge-status"></span> CYBER SORTING STATION • ÔN TẬP GIỮA HỌC KÌ I</p>
+          <p><span class="badge-status"></span> CYBER SORTING STATION • GIỮA HỌC KÌ I</p>
         </div>
       </div>
 
@@ -800,11 +870,11 @@
       <!-- ĐIỂM SỐ & CHUỖI COMBO -->
       <div class="hud-right">
         <div class="hud-pod">
-          <div class="pod-label">ĐIỂM NĂNG LƯỢNG</div>
+          <div class="pod-label">ĐIỂM SỐ</div>
           <div class="pod-value" id="hud-score">0</div>
         </div>
         <div class="hud-pod">
-          <div class="pod-label">COMBO LIÊN HOÀN</div>
+          <div class="pod-label">COMBO</div>
           <div class="pod-value" id="hud-combo" style="color: var(--pink);">x0</div>
         </div>
       </div>
@@ -833,7 +903,7 @@
           Hệ thống đang nạp đĩa dữ liệu Toán học...
         </div>
         <div class="card-prompt">
-          <span class="pulse-arrow">▼</span> KÉO VÀ THẢ VÀO CỔNG ĐÁP ÁN ĐÚNG PHÍA DƯỚI <span class="pulse-arrow">▼</span>
+          <span class="pulse-arrow">▼</span> KÉO THẢ HOẶC CHẠM CHỌN CỔNG ĐÁP ÁN ĐÚNG <span class="pulse-arrow">▼</span>
         </div>
       </div>
 
@@ -851,7 +921,7 @@
         <div class="portal-upbeam"></div>
         <span class="portal-header-pill">PORTAL ALPHA</span>
         <div class="portal-text-zone" id="choice-0">...</div>
-        <div class="portal-footer-status">THẢ VÀO ĐÂY</div>
+        <div class="portal-footer-status">CHỌN ĐÁP ÁN A</div>
       </div>
       <!-- Cổng 1 -->
       <div class="energy-portal portal-col-1" data-portal="1">
@@ -859,7 +929,7 @@
         <div class="portal-upbeam"></div>
         <span class="portal-header-pill">PORTAL BETA</span>
         <div class="portal-text-zone" id="choice-1">...</div>
-        <div class="portal-footer-status">THẢ VÀO ĐÂY</div>
+        <div class="portal-footer-status">CHỌN ĐÁP ÁN B</div>
       </div>
       <!-- Cổng 2 -->
       <div class="energy-portal portal-col-2" data-portal="2">
@@ -867,7 +937,7 @@
         <div class="portal-upbeam"></div>
         <span class="portal-header-pill">PORTAL GAMMA</span>
         <div class="portal-text-zone" id="choice-2">...</div>
-        <div class="portal-footer-status">THẢ VÀO ĐÂY</div>
+        <div class="portal-footer-status">CHỌN ĐÁP ÁN C</div>
       </div>
       <!-- Cổng 3 -->
       <div class="energy-portal portal-col-3" data-portal="3">
@@ -875,7 +945,7 @@
         <div class="portal-upbeam"></div>
         <span class="portal-header-pill">PORTAL DELTA</span>
         <div class="portal-text-zone" id="choice-3">...</div>
-        <div class="portal-footer-status">THẢ VÀO ĐÂY</div>
+        <div class="portal-footer-status">CHỌN ĐÁP ÁN D</div>
       </div>
     </footer>
 
@@ -883,7 +953,7 @@
     <div class="modal-backdrop" id="modal-feedback">
       <div class="cyber-dialog-box">
         <div class="dialog-status-tag tag-correct" id="feedback-tag">CHÍNH XÁC HOÀN HẢO!</div>
-        <h2 id="feedback-heading" style="color: #fff; font-size: 1.45rem; margin-bottom: 8px;">DỮ LIỆU ĐÃ NẠP THÀNH CÔNG</h2>
+        <h2 id="feedback-heading" style="color: #fff; font-size: 1.3rem; margin-bottom: 6px;">DỮ LIỆU ĐÃ NẠP THÀNH CÔNG</h2>
         <div class="dialog-explanation" id="feedback-body">
           Lời giải chi tiết sẽ xuất hiện ở đây...
         </div>
@@ -896,15 +966,15 @@
 
     <!-- MÀN HÌNH HOÀN THÀNH TOÀN BỘ (MISSION COMPLETE) -->
     <div class="modal-backdrop" id="modal-mission-complete">
-      <div class="cyber-dialog-box" style="width: 740px;">
+      <div class="cyber-dialog-box" style="width: 680px;">
         <div class="dialog-status-tag tag-correct">MISSION COMPLETE</div>
-        <h1 style="font-size: 2.1rem; color: #fff; letter-spacing: 2px; text-shadow: 0 0 25px var(--cyan);">TỔNG KẾT TIỆC LẨU TRI THỨC</h1>
+        <h1 style="font-size: 1.8rem; color: #fff; letter-spacing: 1.5px; text-shadow: 0 0 20px var(--cyan);">TỔNG KẾT TIỆC LẨU TRI THỨC</h1>
         <div class="rank-trophy-title" id="complete-rank">🏆 ĐẦU BẾP TOÁN HỌC 5 SAO 🏆</div>
 
         <div class="summary-matrix">
           <div class="summary-box">
             <div class="val" id="metric-score" style="color: var(--cyan);">0</div>
-            <div class="lbl">TỔNG ĐIỂM NĂNG LƯỢNG</div>
+            <div class="lbl">TỔNG ĐIỂM</div>
           </div>
           <div class="summary-box">
             <div class="val" id="metric-accuracy" style="color: var(--green);">100%</div>
@@ -916,7 +986,7 @@
           </div>
         </div>
 
-        <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">
+        <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px;">
           Xuất sắc! Bạn đã phân loại và chinh phục trọn vẹn 20 đĩa dữ liệu toán học ôn tập giữa kì 1!
         </p>
 
@@ -932,7 +1002,6 @@
   <script>
     /* =================================================================
        NGÂN HÀNG DỮ LIỆU TOÁN HỌC ÔN TẬP GIỮA HỌC KÌ 1 - LỚP 5
-       (Giáo viên có thể tùy biến dễ dàng qua GAME_DATA và CATEGORIES)
     ==================================================================== */
     const CATEGORIES = ["PORTAL ALPHA", "PORTAL BETA", "PORTAL GAMMA", "PORTAL DELTA"];
 
@@ -1016,7 +1085,7 @@
           "8,4056"
         ],
         correctIndex: 0,
-        explanation: "• Tám đơn vị = 8.<br>• Bốn phần mười, năm phần trăm, sáu phần nghìn = 0,456.<br>👉 Số thập phân viết là: <strong>8,456</strong>.<br>(Số 125,308 có Phần nguyên là 125; Phần thập phân là 308/1000)."
+        explanation: "• Tám đơn vị = 8.<br>• Bốn phần mười, năm phần trăm, sáu phần nghìn = 0,456.<br>👉 Số thập phân viết là: <strong>8,456</strong>."
       },
       {
         id: 7,
@@ -1029,7 +1098,7 @@
           "4,52 < 4,502 < 4,205 < 4,052"
         ],
         correctIndex: 1,
-        explanation: "So sánh các phần mười và phần trăm:<br>4,052 có phần mười là 0 (bé nhất).<br>4,205 có phần mười là 2.<br>4,502 < 4,52 (vì 4,502 < 4,520).<br>👉 Thứ tự từ bé đến lớn là: <strong>4,052 < 4,205 < 4,502 < 4,52</strong>."
+        explanation: "So sánh phần mười và phần trăm:<br>4,052 < 4,205 < 4,502 < 4,52.<br>👉 Thứ tự từ bé đến lớn là: <strong>4,052 < 4,205 < 4,502 < 4,52</strong>."
       },
       {
         id: 8,
@@ -1042,7 +1111,7 @@
           "38 ; 37,9 và 37,85"
         ],
         correctIndex: 2,
-        explanation: "• Đến số tự nhiên gần nhất: <strong>38</strong> (vì hàng phần mười là 8 ≥ 5).<br>• Đến hàng phần mười: <strong>37,8</strong> (vì hàng phần trăm là 4 < 5).<br>• Đến hàng phần trăm: <strong>37,85</strong> (vì hàng phần nghìn là 6 ≥ 5)."
+        explanation: "• Đến số tự nhiên gần nhất: <strong>38</strong>.<br>• Đến hàng phần mười: <strong>37,8</strong>.<br>• Đến hàng phần trăm: <strong>37,85</strong>."
       },
       {
         id: 9,
@@ -1055,7 +1124,7 @@
           "3100 và 4200"
         ],
         correctIndex: 0,
-        explanation: "a) 1538 + 845 + 462 + 155 = (1538 + 462) + (845 + 155) = 2000 + 1000 = <strong>3000</strong>.<br>b) 42 × 15 + 42 × 85 = 42 × (15 + 85) = 42 × 100 = <strong>4200</strong>."
+        explanation: "a) (1538 + 462) + (845 + 155) = 2000 + 1000 = <strong>3000</strong>.<br>b) 42 × (15 + 85) = 42 × 100 = <strong>4200</strong>."
       },
       {
         id: 10,
@@ -1068,7 +1137,7 @@
           "200 km"
         ],
         correctIndex: 2,
-        explanation: "• Trong 1 giờ ô tô đi được quãng đường là: 120 : 2 = 60 (km).<br>• Trong 4 giờ ô tô đi được quãng đường là: 60 × 4 = <strong>240 (km)</strong>.<br>👉 Đáp số: 240 km."
+        explanation: "• Trong 1 giờ đi được: 120 : 2 = 60 (km).<br>• Trong 4 giờ đi được: 60 × 4 = <strong>240 (km)</strong>.<br>👉 Đáp số: 240 km."
       },
 
       // III. TÌM HAI SỐ KHI BIẾT TỔNG VÀ HIỆU (5 CÂU)
@@ -1083,7 +1152,7 @@
           "Số lớn: 91 ; Số bé: 37"
         ],
         correctIndex: 0,
-        explanation: "• Bước 1: Tổng = 128, Hiệu = 34.<br>• Bước 2 (Số bé): (128 - 34) : 2 = <strong>47</strong>.<br>• Bước 3 (Số lớn): 47 + 34 = <strong>81</strong>.<br>👉 Đáp số: Số bé: 47; Số lớn: 81."
+        explanation: "• Số bé: (128 - 34) : 2 = <strong>47</strong>.<br>• Số lớn: 47 + 34 = <strong>81</strong>.<br>👉 Đáp số: Số bé: 47; Số lớn: 81."
       },
       {
         id: 12,
@@ -1096,7 +1165,7 @@
           "5A: 145 kg ; 5B: 100 kg"
         ],
         correctIndex: 1,
-        explanation: "• Bước 1: Tổng = 245 kg, Hiệu = 35 kg.<br>• Bước 2 (Lớp 5B): (245 - 35) : 2 = <strong>105 (kg)</strong>.<br>• Bước 3 (Lớp 5A): 105 + 35 = <strong>140 (kg)</strong>.<br>👉 Đáp số: Lớp 5A: 140 kg; Lớp 5B: 105 kg."
+        explanation: "• Lớp 5B: (245 - 35) : 2 = <strong>105 (kg)</strong>.<br>• Lớp 5A: 105 + 35 = <strong>140 (kg)</strong>.<br>👉 Đáp số: Lớp 5A: 140 kg; Lớp 5B: 105 kg."
       },
       {
         id: 13,
@@ -1109,7 +1178,7 @@
           "Mẹ: 39 tuổi ; Con: 7 tuổi"
         ],
         correctIndex: 2,
-        explanation: "• Bước 1: Tổng = 46 tuổi, Hiệu = 28 tuổi.<br>• Bước 2 (Tuổi con): (46 - 28) : 2 = <strong>9 (tuổi)</strong>.<br>• Bước 3 (Tuổi mẹ): 9 + 28 = <strong>37 (tuổi)</strong>.<br>👉 Đáp số: Mẹ: 37 tuổi; Con: 9 tuổi."
+        explanation: "• Tuổi con: (46 - 28) : 2 = <strong>9 (tuổi)</strong>.<br>• Tuổi mẹ: 9 + 28 = <strong>37 (tuổi)</strong>.<br>👉 Đáp số: Mẹ: 37 tuổi; Con: 9 tuổi."
       },
       {
         id: 14,
@@ -1122,7 +1191,7 @@
           "Dài: 45 m ; Rộng: 35 m"
         ],
         correctIndex: 0,
-        explanation: "• Bước 1: Nửa chu vi (tổng dài và rộng) là: 160 : 2 = 80 (m).<br>• Bước 2 (Chiều rộng): (80 - 20) : 2 = <strong>30 (m)</strong>.<br>• Bước 3 (Chiều dài): 30 + 20 = <strong>50 (m)</strong>.<br>👉 Đáp số: Chiều dài: 50 m; Chiều rộng: 30 m."
+        explanation: "• Nửa chu vi (tổng): 160 : 2 = 80 (m).<br>• Chiều rộng: (80 - 20) : 2 = <strong>30 (m)</strong>.<br>• Chiều dài: 30 + 20 = <strong>50 (m)</strong>."
       },
       {
         id: 15,
@@ -1135,7 +1204,7 @@
           "Thùng 1: 210 l ; Thùng 2: 140 l"
         ],
         correctIndex: 2,
-        explanation: "• Bước 1: Tổng = 350 lít, Thùng 1 hơn Thùng 2 là 50 lít.<br>• Bước 2: Thùng thứ hai chứa: (350 - 50) : 2 = <strong>150 (lít)</strong>.<br>• Bước 3: Thùng thứ nhất chứa: 150 + 50 = <strong>200 (lít)</strong>.<br>👉 Đáp số: Thùng 1: 200 lít; Thùng 2: 150 lít."
+        explanation: "• Thùng 2: (350 - 50) : 2 = <strong>150 (lít)</strong>.<br>• Thùng 1: 150 + 50 = <strong>200 (lít)</strong>."
       },
 
       // IV. ĐỔI ĐƠN VỊ ĐO (5 CÂU)
@@ -1150,7 +1219,7 @@
           "48,5 m và 2,56 km"
         ],
         correctIndex: 1,
-        explanation: "a) 4 m 85 cm = <strong>4,85 m</strong> (vì 85 cm = 0,85 m).<br>b) 25 km 60 m = <strong>25,06 km</strong> (vì 60 m = 0,06 km).<br>(Lưu ý thêm: 720 mm = 0,72 m ; 3 dm 5 mm = 3,05 dm)."
+        explanation: "a) 4 m 85 cm = <strong>4,85 m</strong>.<br>b) 25 km 60 m = <strong>25,06 km</strong>."
       },
       {
         id: 17,
@@ -1163,7 +1232,7 @@
           "5,035 tấn và 0,28 tạ"
         ],
         correctIndex: 2,
-        explanation: "a) 5 tấn 350 kg = <strong>5,35 tấn</strong>.<br>b) 2 tạ 8 kg = <strong>2,08 tạ</strong> (vì 8 kg = 8/100 tạ = 0,08 tạ).<br>(Lưu ý thêm: 450 g = 0,45 kg ; 6 kg 75 g = 6,075 kg)."
+        explanation: "a) 5 tấn 350 kg = <strong>5,35 tấn</strong>.<br>b) 2 tạ 8 kg = <strong>2,08 tạ</strong>."
       },
       {
         id: 18,
@@ -1176,7 +1245,7 @@
           "845 m² và 12 km²"
         ],
         correctIndex: 0,
-        explanation: "a) 8 m² 45 dm² = <strong>8,45 m²</strong> (vì 45 dm² = 0,45 m²).<br>b) 12 ha = <strong>0,12 km²</strong> (vì 1 km² = 100 ha nên 12 ha = 12/100 km²).<br>(Lưu ý thêm: 350 dm² = 3,5 m² ; 4 cm² 5 mm² = 4,05 cm²)."
+        explanation: "a) 8 m² 45 dm² = <strong>8,45 m²</strong>.<br>b) 12 ha = <strong>0,12 km²</strong> (vì 1 km² = 100 ha)."
       },
       {
         id: 19,
@@ -1189,7 +1258,7 @@
           "< và >"
         ],
         correctIndex: 1,
-        explanation: "a) 3 m² 5 dm² = 3,05 m² < 3,5 m² 👉 <strong><</strong><br>b) 2 tấn 50 kg = 2,05 tấn 👉 <strong>=</strong><br>(Lưu ý thêm: 4 km 80 m < 4,8 km ; 7 ha 600 m² = 7,06 ha)."
+        explanation: "a) 3,05 m² < 3,5 m² 👉 <strong><</strong><br>b) 2,05 tấn = 2,05 tấn 👉 <strong>=</strong>"
       },
       {
         id: 20,
@@ -1202,12 +1271,12 @@
           "40 000 m² ; 4 ha"
         ],
         correctIndex: 2,
-        explanation: "• Diện tích sân trường là: 80 × 50 = <strong>4 000 (m²)</strong>.<br>• Đổi sang héc-ta: vì 1 ha = 10 000 m² nên 4 000 m² = 4 000 : 10 000 = <strong>0,4 (ha)</strong>.<br>👉 Đáp số: a) 4 000 m² ; b) 0,4 ha."
+        explanation: "• Diện tích là: 80 × 50 = <strong>4 000 (m²)</strong>.<br>• Đổi sang ha: 4 000 : 10 000 = <strong>0,4 (ha)</strong>."
       }
     ];
 
     /* =================================================================
-       BỘ TỔNG HỢP ÂM THANH CÔNG NGHỆ CAO (WEB AUDIO API TỔNG HỢP NỘI TẠI)
+       BỘ TỔNG HỢP ÂM THANH CÔNG NGHỆ CAO (WEB AUDIO API)
     ==================================================================== */
     class FuturisticSoundFX {
       constructor() {
@@ -1242,15 +1311,12 @@
         } catch (e) {}
       }
 
-      playGrab() {
-        this.playTone(360, 'triangle', 0.08, 0.15);
-      }
+      playGrab() { this.playTone(360, 'triangle', 0.08, 0.15); }
 
       playSuccess() {
         if (!this.enabled) return;
         this.initContext();
         const now = this.ctx.currentTime;
-        // Chuỗi hợp âm ánh sáng C-Major Pentatonic
         const chord = [523.25, 659.25, 783.99, 1046.50];
         chord.forEach((freq, idx) => {
           const osc = this.ctx.createOscillator();
@@ -1292,7 +1358,7 @@
     const sfx = new FuturisticSoundFX();
 
     /* =================================================================
-       BỘ ĐIỀU KHIỂN TRẠNG THÁI TRÒ CHƠI (GAME STATE CONTROLLER)
+       BỘ ĐIỀU KHIỂN TRẠNG THÁI TRÒ CHƠI
     ==================================================================== */
     const state = {
       index: 0,
@@ -1310,7 +1376,6 @@
       targetPortalIndex: null
     };
 
-    // DOM Elements
     const cardEl = document.getElementById('active-card');
     const cardTagEl = document.getElementById('card-tag');
     const cardTopicEl = document.getElementById('card-topic');
@@ -1324,7 +1389,6 @@
     const laserBeamEl = document.getElementById('laser-beam');
     const portals = document.querySelectorAll('.energy-portal');
 
-    // Modals
     const modalFeedback = document.getElementById('modal-feedback');
     const feedbackTag = document.getElementById('feedback-tag');
     const feedbackHeading = document.getElementById('feedback-heading');
@@ -1333,9 +1397,6 @@
     const modalMissionComplete = document.getElementById('modal-mission-complete');
     const btnRestart = document.getElementById('btn-restart');
 
-    /* =================================================================
-       NẠP CÂU HỎI LÊN BĂNG CHUYỀN
-    ==================================================================== */
     function renderQuestion(idx) {
       const q = GAME_DATA[idx];
       state.questionStartTime = Date.now();
@@ -1344,18 +1405,15 @@
       cardTopicEl.textContent = `CHỦ ĐỀ: ${q.topic}`;
       cardContentEl.innerHTML = q.question;
 
-      // Nạp 4 lựa chọn vào 4 cổng
       q.options.forEach((choiceText, i) => {
         const choiceEl = document.getElementById(`choice-${i}`);
         if (choiceEl) choiceEl.textContent = choiceText;
       });
 
-      // Cập nhật thanh tiến trình
       const pct = (idx / state.total) * 100;
       barProgressEl.style.width = `${pct}%`;
       txtProgressEl.textContent = `${idx + 1} / ${state.total}`;
 
-      // Reset thẻ về vị trí trung tâm
       cardEl.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s';
       cardEl.style.transform = 'translate(0px, 0px)';
       cardEl.style.opacity = '1';
@@ -1365,7 +1423,7 @@
     }
 
     /* =================================================================
-       HỆ THỐNG KÉO THẢ TƯƠNG TÁC ĐA ĐIỂM (TOUCH & MOUSE)
+       HỆ THỐNG KÉO THẢ VÀ CHẠM CHỌN (TOUCH & MOUSE)
     ==================================================================== */
     function setupInteractions() {
       const onStart = (cx, cy) => {
@@ -1383,9 +1441,8 @@
 
         state.currentPosX = cx - state.dragStartX;
         state.currentPosY = cy - state.dragStartY;
-        cardEl.style.transform = `translate(${state.currentPosX}px, ${state.currentPosY}px) scale(1.05)`;
+        cardEl.style.transform = `translate(${state.currentPosX}px, ${state.currentPosY}px) scale(1.04)`;
 
-        // Vẽ đường laze nối từ gốc thẻ đến trỏ chuột
         const stageBox = stageEl.getBoundingClientRect();
         const cardBox = cardEl.getBoundingClientRect();
         const originX = cardBox.left + cardBox.width / 2 - stageBox.left;
@@ -1408,7 +1465,6 @@
         if (state.targetPortalIndex !== null) {
           submitSelection(state.targetPortalIndex);
         } else {
-          // Trả thẻ về băng chuyền nếu thả ngoài cổng
           cardEl.style.transition = 'transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1)';
           cardEl.style.transform = 'translate(0px, 0px)';
           state.currentPosX = 0;
@@ -1419,12 +1475,10 @@
         state.targetPortalIndex = null;
       };
 
-      // Sự kiện chuột máy tính
       cardEl.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY));
       window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
       window.addEventListener('mouseup', onEnd);
 
-      // Sự kiện cảm ứng (Màn hình thông minh / Tablet)
       cardEl.addEventListener('touchstart', (e) => {
         if (e.touches.length > 0) onStart(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: true });
@@ -1435,7 +1489,6 @@
 
       window.addEventListener('touchend', onEnd);
 
-      // Cho phép bấm trực tiếp vào cổng nếu dùng chuột hoặc học sinh tiểu học
       portals.forEach((p) => {
         p.addEventListener('click', () => {
           const idx = parseInt(p.getAttribute('data-portal'), 10);
@@ -1458,36 +1511,26 @@
       state.targetPortalIndex = hovered;
     }
 
-    /* =================================================================
-       ĐÁNH GIÁ ĐÁP ÁN, TÍNH ĐIỂM THƯỞNG VÀ HIỆU ỨNG COMBO
-    ==================================================================== */
     function submitSelection(chosenIdx) {
       const q = GAME_DATA[state.index];
       const targetPortal = portals[chosenIdx];
 
       if (chosenIdx === q.correctIndex) {
-        // == ĐÁP ÁN CHÍNH XÁC ==
         sfx.playSuccess();
         state.correctCount++;
         state.combo++;
         if (state.combo > state.maxCombo) state.maxCombo = state.combo;
 
-        // Tính điểm: 10 cơ bản + Combo bonus + Speed Bonus (< 10 giây)
         const timeSpent = (Date.now() - state.questionStartTime) / 1000;
         let gained = 10;
         if (state.combo > 1) gained += (state.combo - 1) * 2;
-        if (timeSpent <= 10) gained += 5; // Speed Bonus
+        if (timeSpent <= 10) gained += 5;
 
         animateScoreAdd(gained);
         hudComboEl.textContent = `x${state.combo}`;
-
-        // Hiệu ứng hạt điểm nổi lên
         createFloatingScorePop(targetPortal, `+${gained}`);
-
-        // Kích hoạt Combo Hologram
         showComboAlert(state.combo);
 
-        // Hiệu ứng hút thẻ dữ liệu vào cổng
         const pBox = targetPortal.getBoundingClientRect();
         const sBox = stageEl.getBoundingClientRect();
         const toX = pBox.left + pBox.width / 2 - sBox.width / 2;
@@ -1497,29 +1540,22 @@
         cardEl.style.transform = `translate(${toX}px, ${toY}px) scale(0.2)`;
         cardEl.style.opacity = '0';
 
-        setTimeout(() => {
-          showFeedbackDialog(true, q);
-        }, 360);
+        setTimeout(() => { showFeedbackDialog(true, q); }, 360);
 
       } else {
-        // == ĐÁP ÁN CHƯA ĐÚNG ==
         sfx.playWrong();
         state.combo = 0;
         hudComboEl.textContent = 'x0';
 
-        // Cổng rung cảnh báo
         targetPortal.classList.add('portal-alert-shake');
         setTimeout(() => targetPortal.classList.remove('portal-alert-shake'), 480);
 
-        // Trả thẻ về băng chuyền
         cardEl.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
         cardEl.style.transform = 'translate(0px, 0px)';
         state.currentPosX = 0;
         state.currentPosY = 0;
 
-        setTimeout(() => {
-          showFeedbackDialog(false, q);
-        }, 400);
+        setTimeout(() => { showFeedbackDialog(false, q); }, 400);
       }
     }
 
@@ -1591,8 +1627,13 @@
     });
 
     /* =================================================================
-       MÀN HÌNH CHIẾN THẮNG MISSION COMPLETE & PHÁO HOA
+       MÀN HÌNH CHIẾN THẮNG & PHÁO HOA
     ==================================================================== */
+    const celebCanvas = document.getElementById('celebration-canvas');
+    const celebCtx = celebCanvas.getContext('2d');
+    let celebParts = [];
+    let celebTimer = null;
+
     function triggerMissionComplete() {
       barProgressEl.style.width = '100%';
       txtProgressEl.textContent = '20 / 20 HOÀN THÀNH';
@@ -1625,9 +1666,6 @@
       renderQuestion(0);
     });
 
-    /* =================================================================
-       HỆ THỐNG ĐỒ HỌA CANVAS MATRIX & PHÁO HOA LƯỢNG TỬ
-    ==================================================================== */
     const bgCanvas = document.getElementById('bg-canvas');
     const bgCtx = bgCanvas.getContext('2d');
     let matrixParticles = [];
@@ -1636,11 +1674,11 @@
       bgCanvas.width = stageEl.clientWidth;
       bgCanvas.height = stageEl.clientHeight;
       matrixParticles = [];
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 40; i++) {
         matrixParticles.push({
           x: Math.random() * bgCanvas.width,
           y: Math.random() * bgCanvas.height,
-          radius: Math.random() * 1.6 + 0.4,
+          radius: Math.random() * 1.5 + 0.4,
           alpha: Math.random(),
           speed: Math.random() * 0.012 + 0.006
         });
@@ -1660,26 +1698,20 @@
       requestAnimationFrame(renderMatrixBg);
     }
 
-    // Canvas Pháo hoa
-    const celebCanvas = document.getElementById('celebration-canvas');
-    const celebCtx = celebCanvas.getContext('2d');
-    let celebParts = [];
-    let celebTimer = null;
-
     function startCelebrationCanvas() {
       celebCanvas.width = stageEl.clientWidth;
       celebCanvas.height = stageEl.clientHeight;
       celebParts = [];
       const colors = ['#00f3ff', '#b5179e', '#ffb703', '#00ffa3', '#ff007f'];
 
-      for (let i = 0; i < 140; i++) {
+      for (let i = 0; i < 120; i++) {
         celebParts.push({
           x: celebCanvas.width / 2,
           y: celebCanvas.height / 2,
-          vx: (Math.random() - 0.5) * 18,
-          vy: (Math.random() - 0.5) * 18 - 3,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.5) * 16 - 3,
           color: colors[Math.floor(Math.random() * colors.length)],
-          size: Math.random() * 6 + 3,
+          size: Math.random() * 5 + 3,
           alpha: 1,
           decay: Math.random() * 0.015 + 0.008
         });
@@ -1699,7 +1731,7 @@
           celebCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
           celebCtx.fillStyle = p.color;
           celebCtx.globalAlpha = p.alpha;
-          celebCtx.shadowBlur = 12;
+          celebCtx.shadowBlur = 10;
           celebCtx.shadowColor = p.color;
           celebCtx.fill();
           celebCtx.globalAlpha = 1;
@@ -1718,9 +1750,6 @@
       celebParts = [];
     }
 
-    /* =================================================================
-       NÚT ĐIỀU KHIỂN ÂM THANH & TOÀN MÀN HÌNH
-    ==================================================================== */
     const btnSound = document.getElementById('btn-sound');
     btnSound.addEventListener('click', () => {
       sfx.enabled = !sfx.enabled;
