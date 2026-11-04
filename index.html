@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Lẩu Băng Chuyền Toán Học 5.0 - Cyber Quantum Sorting Matrix</title>
+  <style>
+    :root {
+      --bg-primary: #060919;
+      --bg-radial: radial-gradient(ellipse at 50% 25%, #141c4b 0%, #080d26 60%, #030511 100%);
+      --cyan: #00f3ff;
+      --cyan-glow: rgba(0, 243, 255, 0.55);
+      --purple: #b5179e;
+      --purple-glow: rgba(181, 23, 158, 0.55);
+      --gold: #ffb703;
+      --gold-glow: rgba(255, 183, 3, 0.6);
+      --pink: #ff007f;
+      --green: #00ffa3;
+      --green-glow: rgba(0, 255, 163, 0.5);
+      --glass-panel: rgba(13, 22, 54, 0.78);
+      --glass-border: rgba(0, 243, 255, 0.28);
+      --font-sci: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    body {
+      background: var(--bg-primary);
+      background-image: var(--bg-radial);
+      font-family: var(--font-sci);
+      color: #e2e8f0;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Khung máy chủ 16:9 tối ưu cho máy chiếu trường học */
+    #game-stage {
+      width: 100vw;
+      height: 56.25vw;
+      max-height: 100vh;
+      max-width: 177.78vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      box-shadow: 0 0 70px rgba(0, 243, 255, 0.2), inset 0 0 100px rgba(10, 16, 45, 0.8);
+      background: rgba(7, 12, 33, 0.9);
+      border: 1.5px solid rgba(0, 243, 255, 0.25);
+    }
+
+    /* Canvas hiệu ứng Grid Matrix Cybernetic */
+    #bg-canvas, #celebration-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    #bg-canvas { z-index: 1; }
+    #celebration-canvas { z-index: 220; }
+
+    /* SVG dây năng lượng Laser kết nối tương tác */
+    #drag-laser-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 90;
+    }
+
+    /* =================================================================
+       HUD CÔNG NGHỆ CAO (HEADER)
+    ==================================================================== */
+    header {
+      position: relative;
+      z-index: 20;
+      padding: 12px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(8, 14, 38, 0.95) 0%, rgba(8, 14, 38, 0) 100%);
+      border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+    }
+
+    .hud-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .ai-quantum-orb {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      border: 1.5px solid var(--cyan);
+      box-shadow: 0 0 20px var(--cyan-glow), inset 0 0 10px var(--cyan-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 243, 255, 0.12);
+      animation: pulseCore 3s infinite ease-in-out;
+    }
+
+    @keyframes pulseCore {
+      0%, 100% { transform: scale(1); border-color: var(--cyan); box-shadow: 0 0 15px var(--cyan-glow); }
+      50% { transform: scale(1.06); border-color: var(--pink); box-shadow: 0 0 26px var(--purple-glow); }
+    }
+
+    .title-banner h1 {
+      font-size: 1.35rem;
+      letter-spacing: 2.5px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #ffffff 0%, var(--cyan) 50%, #d946ef 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+    }
+
+    .title-banner p {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .title-banner p span.badge-status {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: blinkOnline 1.5s infinite;
+    }
+
+    @keyframes blinkOnline {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hud-center {
+      flex: 1;
+      max-width: 280px;
+      margin: 0 24px;
+    }
+
+    .metric-progress-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      margin-bottom: 5px;
+      color: var(--cyan);
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .energy-bar-track {
+      height: 9px;
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 5px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 243, 255, 0.35);
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
+      position: relative;
+    }
+
+    .energy-bar-fill {
+      height: 100%;
+      width: 5%;
+      background: linear-gradient(90deg, var(--cyan), #3b82f6, var(--pink));
+      box-shadow: 0 0 14px var(--cyan);
+      transition: width 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+
+    .hud-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hud-pod {
+      background: var(--glass-panel);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 6px 16px;
+      min-width: 95px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: inset 0 0 12px rgba(0, 243, 255, 0.1);
+    }
+
+    .hud-pod .pod-label {
+      font-size: 0.65rem;
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .hud-pod .pod-value {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: #fff;
+      font-feature-settings: "tnum";
+    }
+
+    .hud-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .cyber-btn-icon {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1.2px solid rgba(0, 243, 255, 0.4);
+      color: var(--cyan);
+      border-radius: 9px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.25s ease;
+    }
+
+    .cyber-btn-icon:hover {
+      background: var(--cyan);
+      color: #070919;
+      box-shadow: 0 0 18px var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    /* =================================================================
+       BĂNG CHUYỀN LẨU HỌC TẬP TƯƠNG TÁC (CONVEYOR STAGE)
+    ==================================================================== */
+    .conveyor-zone {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      height: 53%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Máy quét laze Hologram dọc trên băng chuyền */
+    .hologram-scanner {
+      position: absolute;
+      top: 6%;
+      width: 580px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--cyan), #fff, var(--cyan), transparent);
+      box-shadow: 0 0 30px var(--cyan), 0 0 10px #fff;
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 30;
+      animation: scanThrough 3.6s infinite ease-in-out;
+    }
+
+    @keyframes scanThrough {
+      0%, 100% { transform: translateY(0px) scaleX(0.7); opacity: 0.25; }
+      50% { transform: translateY(200px) scaleX(1); opacity: 0.95; }
+    }
+
+    /* Hiển thị Combo liên hoàn nổi bật */
+    .combo-hologram-banner {
+      position: absolute;
+      top: 8%;
+      right: 9%;
+      font-size: 2.3rem;
+      font-weight: 900;
+      font-style: italic;
+      color: #ffffff;
+      text-shadow: 0 0 25px var(--pink), 0 0 45px var(--purple);
+      pointer-events: none;
+      z-index: 70;
+      transform: scale(0) rotate(15deg);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .combo-hologram-banner.active {
+      transform: scale(1.1) rotate(-6deg);
+      opacity: 1;
+    }
+
+    /* Thẻ dữ liệu đĩa lẩu trên băng chuyền (Data Plate) */
+    .conveyor-card {
+      position: relative;
+      z-index: 40;
+      width: 580px;
+      max-width: 88%;
+      min-height: 220px;
+      background: linear-gradient(135deg, rgba(16, 26, 65, 0.9) 0%, rgba(8, 14, 42, 0.95) 100%);
+      border: 2px solid var(--cyan);
+      border-radius: 22px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 0 40px rgba(0, 243, 255, 0.28), inset 0 0 25px rgba(0, 243, 255, 0.12);
+      padding: 18px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: grab;
+      touch-action: none;
+      transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s, opacity 0.3s;
+    }
+
+    .conveyor-card:active {
+      cursor: grabbing;
+    }
+
+    .conveyor-card.dragging {
+      opacity: 0.93;
+      transform: scale(1.05) rotate(-1.5deg);
+      box-shadow: 0 0 55px var(--cyan), inset 0 0 35px var(--purple);
+      border-color: #ffffff;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .tag-dish {
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: #070919;
+      background: var(--cyan);
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      box-shadow: 0 0 12px var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tag-topic {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--gold-glow);
+      letter-spacing: 0.8px;
+    }
+
+    .question-content {
+      font-size: 1.15rem;
+      line-height: 1.55;
+      color: #f8fafc;
+      font-weight: 600;
+      text-align: center;
+      margin: 10px 0;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .question-content b, .question-content strong {
+      color: var(--cyan);
+      font-weight: 800;
+    }
+
+    .card-prompt {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      border-top: 1px dashed rgba(0, 243, 255, 0.25);
+      padding-top: 8px;
+      font-weight: 700;
+    }
+
+    .card-prompt .pulse-arrow {
+      color: var(--cyan);
+      animation: floatDown 1.4s infinite ease-in-out;
+    }
+
+    @keyframes floatDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+
+    /* Ray kim loại băng chuyền tương lai */
+    .conveyor-track {
+      position: absolute;
+      bottom: 19%;
+      width: 95%;
+      height: 32px;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 50%, #030712 100%);
+      border: 1.5px solid rgba(0, 243, 255, 0.35);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 243, 255, 0.18);
+      overflow: hidden;
+    }
+
+    .conveyor-belt-lights {
+      position: absolute;
+      width: 200%;
+      height: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: repeating-linear-gradient(90deg, var(--cyan) 0px, var(--cyan) 28px, transparent 28px, transparent 56px);
+      box-shadow: 0 0 12px var(--cyan);
+      animation: runBelt 3.2s linear infinite;
+    }
+
+    @keyframes runBelt {
+      0% { transform: translate(0, -50%); }
+      100% { transform: translate(-56px, -50%); }
+    }
+
+    /* Hiệu ứng hạt điểm nổi lên (+10, +15, +25) */
+    .score-floating-pop {
+      position: absolute;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--gold);
+      text-shadow: 0 0 18px var(--gold-glow);
+      pointer-events: none;
+      z-index: 150;
+      animation: scoreRise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    @keyframes scoreRise {
+      0% { opacity: 0; transform: translateY(0) scale(0.6); }
+      35% { opacity: 1; transform: translateY(-30px) scale(1.2); }
+      100% { opacity: 0; transform: translateY(-75px) scale(1); }
+    }
+
+    /* =================================================================
+       HỆ THỐNG CỔNG NĂNG LƯỢNG (AI ENERGY DATA PORTALS)
+    ==================================================================== */
+    .portals-matrix {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      height: 38%;
+      padding: 0 26px 18px 26px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .energy-portal {
+      position: relative;
+      background: linear-gradient(180deg, rgba(10, 20, 52, 0.65) 0%, rgba(5, 10, 28, 0.95) 100%);
+      border: 2px solid rgba(0, 243, 255, 0.28);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.25s ease;
+      overflow: hidden;
+      box-shadow: inset 0 0 15px rgba(0, 243, 255, 0.08);
+    }
+
+    .portal-ring-outer {
+      position: absolute;
+      top: -24px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 2px dashed rgba(0, 243, 255, 0.3);
+      animation: spinPortal 14s linear infinite;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    @keyframes spinPortal {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .portal-upbeam {
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 50%;
+      background: linear-gradient(0deg, rgba(0, 243, 255, 0.16) 0%, transparent 100%);
+      opacity: 0.4;
+      pointer-events: none;
+      transition: opacity 0.3s, height 0.3s;
+    }
+
+    .energy-portal:hover,
+    .energy-portal.drag-target-hover {
+      transform: translateY(-8px);
+      border-color: #ffffff;
+      box-shadow: 0 0 40px var(--cyan), inset 0 0 30px rgba(0, 243, 255, 0.35);
+    }
+
+    .energy-portal.drag-target-hover .portal-upbeam {
+      opacity: 1;
+      height: 100%;
+      background: linear-gradient(0deg, var(--cyan-glow) 0%, transparent 100%);
+    }
+
+    .portal-header-pill {
+      font-size: 0.72rem;
+      font-weight: 900;
+      padding: 3px 12px;
+      border-radius: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 1px solid;
+      z-index: 2;
+    }
+
+    .portal-text-zone {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.4;
+      margin: auto 0;
+      padding: 6px;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+      z-index: 2;
+    }
+
+    .portal-footer-status {
+      font-size: 0.68rem;
+      color: #64748b;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      font-weight: 700;
+      z-index: 2;
+    }
+
+    /* Tông màu riêng biệt cho 4 cổng AI */
+    .portal-col-0 { border-color: rgba(0, 243, 255, 0.4); }
+    .portal-col-0 .portal-header-pill { color: var(--cyan); border-color: var(--cyan); background: rgba(0, 243, 255, 0.12); }
+
+    .portal-col-1 { border-color: rgba(181, 23, 158, 0.45); }
+    .portal-col-1 .portal-header-pill { color: #f472b6; border-color: #f472b6; background: rgba(244, 114, 182, 0.12); }
+    .portal-col-1 .portal-ring-outer { border-color: rgba(244, 114, 182, 0.35); }
+
+    .portal-col-2 { border-color: rgba(255, 183, 3, 0.45); }
+    .portal-col-2 .portal-header-pill { color: var(--gold); border-color: var(--gold); background: rgba(255, 183, 3, 0.12); }
+    .portal-col-2 .portal-ring-outer { border-color: rgba(255, 183, 3, 0.35); }
+
+    .portal-col-3 { border-color: rgba(0, 255, 163, 0.45); }
+    .portal-col-3 .portal-header-pill { color: var(--green); border-color: var(--green); background: rgba(0, 255, 163, 0.12); }
+    .portal-col-3 .portal-ring-outer { border-color: rgba(0, 255, 163, 0.35); }
+
+    /* Rung cảnh báo khi sai */
+    .portal-alert-shake {
+      animation: alertShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+      border-color: #ff3366 !important;
+      box-shadow: 0 0 40px rgba(255, 51, 102, 0.7) !important;
+    }
+
+    @keyframes alertShake {
+      10%, 90% { transform: translate3d(-3px, 0, 0); }
+      20%, 80% { transform: translate3d(5px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+      40%, 60% { transform: translate3d(6px, 0, 0); }
+    }
+
+    /* =================================================================
+       MODAL LỜI GIẢI CHI TIẾT & MISSION COMPLETE
+    ==================================================================== */
+    .modal-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(4, 8, 24, 0.88);
+      backdrop-filter: blur(18px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cyber-dialog-box {
+      width: 680px;
+      max-width: 92%;
+      background: linear-gradient(145deg, #0f1938 0%, #060b1c 100%);
+      border: 2px solid var(--cyan);
+      border-radius: 26px;
+      padding: 30px;
+      box-shadow: 0 0 60px rgba(0, 243, 255, 0.32);
+      position: relative;
+      text-align: center;
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-backdrop.active .cyber-dialog-box {
+      transform: scale(1);
+    }
+
+    .dialog-status-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 900;
+      padding: 5px 20px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .tag-correct {
+      background: rgba(0, 255, 163, 0.15);
+      border: 1.5px solid var(--green);
+      color: var(--green);
+      box-shadow: 0 0 16px rgba(0, 255, 163, 0.35);
+    }
+
+    .tag-retry {
+      background: rgba(255, 183, 3, 0.15);
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+    }
+
+    .dialog-explanation {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(0, 243, 255, 0.25);
+      border-radius: 16px;
+      padding: 18px 22px;
+      text-align: left;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #cbd5e1;
+      margin: 18px 0;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .dialog-explanation strong, .dialog-explanation b {
+      color: var(--cyan);
+    }
+
+    .cyber-btn-launch {
+      background: linear-gradient(90deg, var(--cyan) 0%, #0099ff 100%);
+      color: #040817;
+      font-weight: 900;
+      font-size: 1rem;
+      border: none;
+      padding: 13px 40px;
+      border-radius: 35px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      box-shadow: 0 0 28px var(--cyan);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cyber-btn-launch:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 45px var(--cyan);
+    }
+
+    /* Màn hình tổng kết (Mission Complete) */
+    .summary-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 22px 0;
+    }
+
+    .summary-box {
+      background: rgba(30, 41, 59, 0.55);
+      border: 1px solid rgba(0, 243, 255, 0.22);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .summary-box .val {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .summary-box .lbl {
+      font-size: 0.68rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .rank-trophy-title {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--gold);
+      text-shadow: 0 0 25px var(--gold-glow);
+      margin: 12px 0;
+      letter-spacing: 1.2px;
+    }
+
+    /* Responsive cho màn hình dưới 950px */
+    @media (max-width: 950px) {
+      .portals-matrix {
+        grid-template-columns: repeat(2, 1fr);
+        height: 44%;
+      }
+      .conveyor-zone { height: 46%; }
+      .conveyor-card { width: 92%; min-height: 180px; padding: 14px 18px; }
+      .question-content { font-size: 1rem; }
+      .title-banner h1 { font-size: 1.1rem; }
+      .hud-pod { min-width: 75px; padding: 4px 10px; }
+      .hud-pod .pod-value { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game-stage">
+    <!-- Nền Grid Matrix Cybernetic -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Tia laze lượng tử kéo thẻ -->
+    <svg id="drag-laser-svg">
+      <line id="laser-beam" x1="0" y1="0" x2="0" y2="0" stroke="#00f3ff" stroke-width="2.5" stroke-dasharray="6,4" opacity="0"></line>
+    </svg>
+
+    <!-- Pháo hoa lượng tử chiến thắng -->
+    <canvas id="celebration-canvas"></canvas>
+
+    <!-- HEADER / HUD CÔNG NGHỆ -->
+    <header>
+      <div class="hud-left">
+        <div class="ai-quantum-orb">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2" stroke="#00f3ff"></polygon>
+            <polyline points="2 17 12 22 22 17" stroke="#b5179e"></polyline>
+            <polyline points="2 12 12 17 22 12" stroke="#00f3ff"></polyline>
+          </svg>
+        </div>
+        <div class="title-banner">
+          <h1>LẨU BĂNG CHUYỀN TOÁN HỌC 5.0</h1>
+          <p><span class="badge-status"></span> CYBER SORTING STATION • ÔN TẬP GIỮA HỌC KÌ I</p>
+        </div>
+      </div>
+
+      <!-- THANH NĂNG LƯỢNG TIẾN TRÌNH -->
+      <div class="hud-center">
+        <div class="metric-progress-top">
+          <span>NĂNG LƯỢNG BĂNG CHUYỀN</span>
+          <span id="txt-progress">1 / 20</span>
+        </div>
+        <div class="energy-bar-track">
+          <div class="energy-bar-fill" id="bar-progress"></div>
+        </div>
+      </div>
+
+      <!-- ĐIỂM SỐ & CHUỖI COMBO -->
+      <div class="hud-right">
+        <div class="hud-pod">
+          <div class="pod-label">ĐIỂM NĂNG LƯỢNG</div>
+          <div class="pod-value" id="hud-score">0</div>
+        </div>
+        <div class="hud-pod">
+          <div class="pod-label">COMBO LIÊN HOÀN</div>
+          <div class="pod-value" id="hud-combo" style="color: var(--pink);">x0</div>
+        </div>
+      </div>
+
+      <!-- NÚT ĐIỀU KHIỂN ÂM THANH & FULLSCREEN -->
+      <div class="hud-btns">
+        <button class="cyber-btn-icon" id="btn-sound" title="Bật/Tắt Âm thanh">🔊</button>
+        <button class="cyber-btn-icon" id="btn-fullscreen" title="Toàn màn hình">⛶</button>
+      </div>
+    </header>
+
+    <!-- KHU VỰC BĂNG CHUYỀN LẨU HỌC TẬP -->
+    <main class="conveyor-zone" id="conveyor-zone">
+      <div class="hologram-scanner"></div>
+
+      <!-- BANNER COMBO HOLOGRAM -->
+      <div class="combo-hologram-banner" id="combo-banner">SUPER COMBO!</div>
+
+      <!-- ĐĨA DỮ LIỆU ĐANG CHẠY TRÊN BĂNG CHUYỀN -->
+      <div class="conveyor-card" id="active-card">
+        <div class="card-head">
+          <span class="tag-dish" id="card-tag">ĐĨA DỮ LIỆU SỐ 01</span>
+          <span class="tag-topic" id="card-topic">CHỦ ĐỀ: HÌNH HỌC</span>
+        </div>
+        <div class="question-content" id="card-content">
+          Hệ thống đang nạp đĩa dữ liệu Toán học...
+        </div>
+        <div class="card-prompt">
+          <span class="pulse-arrow">▼</span> KÉO VÀ THẢ VÀO CỔNG ĐÁP ÁN ĐÚNG PHÍA DƯỚI <span class="pulse-arrow">▼</span>
+        </div>
+      </div>
+
+      <!-- ĐƯỜNG RAY KIM LOẠI CÔNG NGHỆ -->
+      <div class="conveyor-track">
+        <div class="conveyor-belt-lights"></div>
+      </div>
+    </main>
+
+    <!-- KHU VỰC 4 CỔNG ĐÁP ÁN NĂNG LƯỢNG -->
+    <footer class="portals-matrix" id="portals-matrix">
+      <!-- Cổng 0 -->
+      <div class="energy-portal portal-col-0" data-portal="0">
+        <div class="portal-ring-outer"></div>
+        <div class="portal-upbeam"></div>
+        <span class="portal-header-pill">PORTAL ALPHA</span>
+        <div class="portal-text-zone" id="choice-0">...</div>
+        <div class="portal-footer-status">THẢ VÀO ĐÂY</div>
+      </div>
+      <!-- Cổng 1 -->
+      <div class="energy-portal portal-col-1" data-portal="1">
+        <div class="portal-ring-outer"></div>
+        <div class="portal-upbeam"></div>
+        <span class="portal-header-pill">PORTAL BETA</span>
+        <div class="portal-text-zone" id="choice-1">...</div>
+        <div class="portal-footer-status">THẢ VÀO ĐÂY</div>
+      </div>
+      <!-- Cổng 2 -->
+      <div class="energy-portal portal-col-2" data-portal="2">
+        <div class="portal-ring-outer"></div>
+        <div class="portal-upbeam"></div>
+        <span class="portal-header-pill">PORTAL GAMMA</span>
+        <div class="portal-text-zone" id="choice-2">...</div>
+        <div class="portal-footer-status">THẢ VÀO ĐÂY</div>
+      </div>
+      <!-- Cổng 3 -->
+      <div class="energy-portal portal-col-3" data-portal="3">
+        <div class="portal-ring-outer"></div>
+        <div class="portal-upbeam"></div>
+        <span class="portal-header-pill">PORTAL DELTA</span>
+        <div class="portal-text-zone" id="choice-3">...</div>
+        <div class="portal-footer-status">THẢ VÀO ĐÂY</div>
+      </div>
+    </footer>
+
+    <!-- MODAL LỜI GIẢI CHI TIẾT VÀ BÍ QUYẾT TOÁN -->
+    <div class="modal-backdrop" id="modal-feedback">
+      <div class="cyber-dialog-box">
+        <div class="dialog-status-tag tag-correct" id="feedback-tag">CHÍNH XÁC HOÀN HẢO!</div>
+        <h2 id="feedback-heading" style="color: #fff; font-size: 1.45rem; margin-bottom: 8px;">DỮ LIỆU ĐÃ NẠP THÀNH CÔNG</h2>
+        <div class="dialog-explanation" id="feedback-body">
+          Lời giải chi tiết sẽ xuất hiện ở đây...
+        </div>
+        <button class="cyber-btn-launch" id="btn-next-stage">
+          <span>TIẾP TỤC BĂNG CHUYỀN</span>
+          <span>➜</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MÀN HÌNH HOÀN THÀNH TOÀN BỘ (MISSION COMPLETE) -->
+    <div class="modal-backdrop" id="modal-mission-complete">
+      <div class="cyber-dialog-box" style="width: 740px;">
+        <div class="dialog-status-tag tag-correct">MISSION COMPLETE</div>
+        <h1 style="font-size: 2.1rem; color: #fff; letter-spacing: 2px; text-shadow: 0 0 25px var(--cyan);">TỔNG KẾT TIỆC LẨU TRI THỨC</h1>
+        <div class="rank-trophy-title" id="complete-rank">🏆 ĐẦU BẾP TOÁN HỌC 5 SAO 🏆</div>
+
+        <div class="summary-matrix">
+          <div class="summary-box">
+            <div class="val" id="metric-score" style="color: var(--cyan);">0</div>
+            <div class="lbl">TỔNG ĐIỂM NĂNG LƯỢNG</div>
+          </div>
+          <div class="summary-box">
+            <div class="val" id="metric-accuracy" style="color: var(--green);">100%</div>
+            <div class="lbl">ĐỘ CHÍNH XÁC</div>
+          </div>
+          <div class="summary-box">
+            <div class="val" id="metric-streak" style="color: var(--pink);">x0</div>
+            <div class="lbl">COMBO CAO NHẤT</div>
+          </div>
+        </div>
+
+        <p style="color: #94a3b8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">
+          Xuất sắc! Bạn đã phân loại và chinh phục trọn vẹn 20 đĩa dữ liệu toán học ôn tập giữa kì 1!
+        </p>
+
+        <button class="cyber-btn-launch" id="btn-restart">
+          <span>THỬ THÁCH LẠI</span>
+          <span>↺</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    /* =================================================================
+       NGÂN HÀNG DỮ LIỆU TOÁN HỌC ÔN TẬP GIỮA HỌC KÌ 1 - LỚP 5
+       (Giáo viên có thể tùy biến dễ dàng qua GAME_DATA và CATEGORIES)
+    ==================================================================== */
+    const CATEGORIES = ["PORTAL ALPHA", "PORTAL BETA", "PORTAL GAMMA", "PORTAL DELTA"];
+
+    const GAME_DATA = [
+      // I. HÌNH HỌC (5 CÂU)
+      {
+        id: 1,
+        topic: "I. HÌNH HỌC",
+        question: "Một mảnh đất hình chữ nhật có chiều dài 24 m, chiều rộng bằng 2/3 chiều dài. Tính chu vi và diện tích mảnh đất đó.",
+        options: [
+          "CV: 80 m ; DT: 384 m²",
+          "CV: 40 m ; DT: 384 m²",
+          "CV: 80 m ; DT: 192 m²",
+          "CV: 96 m ; DT: 360 m²"
+        ],
+        correctIndex: 0,
+        explanation: "• Chiều rộng mảnh đất là: 24 × (2/3) = 16 (m).<br>• Chu vi mảnh đất là: (24 + 16) × 2 = <strong>80 (m)</strong>.<br>• Diện tích mảnh đất là: 24 × 16 = <strong>384 (m²)</strong>.<br>👉 Đáp số: Chu vi: 80 m; Diện tích: 384 m²."
+      },
+      {
+        id: 2,
+        topic: "I. HÌNH HỌC",
+        question: "Một tấm bìa hình vuông có chu vi là 36 cm. Tính diện tích của tấm bìa hình vuông đó.",
+        options: [
+          "72 cm²",
+          "81 cm²",
+          "144 cm²",
+          "324 cm²"
+        ],
+        correctIndex: 1,
+        explanation: "• Độ dài cạnh tấm bìa hình vuông là: 36 : 4 = 9 (cm).<br>• Diện tích tấm bìa hình vuông là: 9 × 9 = <strong>81 (cm²)</strong>.<br>👉 Đáp số: 81 cm²."
+      },
+      {
+        id: 3,
+        topic: "I. HÌNH HỌC",
+        question: "Một hình bình hành có độ dài đáy là 18 cm, chiều cao tương ứng bằng 5/9 độ dài đáy. Tính diện tích hình bình hành đó.",
+        options: [
+          "90 cm²",
+          "360 cm²",
+          "180 cm²",
+          "150 cm²"
+        ],
+        correctIndex: 2,
+        explanation: "• Chiều cao hình bình hành là: 18 × (5/9) = 10 (cm).<br>• Diện tích hình bình hành là: 18 × 10 = <strong>180 (cm²)</strong>.<br>👉 Đáp số: 180 cm²."
+      },
+      {
+        id: 4,
+        topic: "I. HÌNH HỌC",
+        question: "Thửa ruộng HCN rộng 15 m, dài gấp 3 lần rộng. Cắt phần hình vuông cạnh bằng rộng, tính DT phần hình chữ nhật nhỏ còn lại?",
+        options: [
+          "450 m²",
+          "225 m²",
+          "300 m²",
+          "675 m²"
+        ],
+        correctIndex: 0,
+        explanation: "• Chiều dài thửa ruộng ban đầu là: 15 × 3 = 45 (m).<br>• Chiều dài phần hình chữ nhật nhỏ còn lại là: 45 - 15 = 30 (m).<br>• Diện tích phần hình chữ nhật nhỏ là: 30 × 15 = <strong>450 (m²)</strong>.<br>👉 Đáp số: 450 m²."
+      },
+      {
+        id: 5,
+        topic: "I. HÌNH HỌC",
+        question: "Khu đất hình bình hành có đáy 45 m, chiều cao 20 m. Cứ 10 m² thu hoạch 12 kg rau. Cả khu đất thu hoạch bao nhiêu kg?",
+        options: [
+          "900 kg",
+          "1 080 kg",
+          "1 200 kg",
+          "10 800 kg"
+        ],
+        correctIndex: 1,
+        explanation: "• Diện tích khu đất hình bình hành là: 45 × 20 = 900 (m²).<br>• Khối lượng rau thu hoạch được: (900 : 10) × 12 = <strong>1 080 (kg)</strong>.<br>👉 Đáp số: 1 080 kg rau."
+      },
+
+      // II. SỐ THẬP PHÂN (5 CÂU)
+      {
+        id: 6,
+        topic: "II. SỐ THẬP PHÂN",
+        question: "Viết số thập phân gồm: Tám đơn vị, bốn phần mười, năm phần trăm, sáu phần nghìn. Số này viết là?",
+        options: [
+          "8,456",
+          "84,56",
+          "8,546",
+          "8,4056"
+        ],
+        correctIndex: 0,
+        explanation: "• Tám đơn vị = 8.<br>• Bốn phần mười, năm phần trăm, sáu phần nghìn = 0,456.<br>👉 Số thập phân viết là: <strong>8,456</strong>.<br>(Số 125,308 có Phần nguyên là 125; Phần thập phân là 308/1000)."
+      },
+      {
+        id: 7,
+        topic: "II. SỐ THẬP PHÂN",
+        question: "Sắp xếp các số sau theo thứ tự từ bé đến lớn: 4,502 ; 4,205 ; 4,52 ; 4,052",
+        options: [
+          "4,052 < 4,502 < 4,205 < 4,52",
+          "4,052 < 4,205 < 4,502 < 4,52",
+          "4,205 < 4,052 < 4,502 < 4,52",
+          "4,52 < 4,502 < 4,205 < 4,052"
+        ],
+        correctIndex: 1,
+        explanation: "So sánh các phần mười và phần trăm:<br>4,052 có phần mười là 0 (bé nhất).<br>4,205 có phần mười là 2.<br>4,502 < 4,52 (vì 4,502 < 4,520).<br>👉 Thứ tự từ bé đến lớn là: <strong>4,052 < 4,205 < 4,502 < 4,52</strong>."
+      },
+      {
+        id: 8,
+        topic: "II. SỐ THẬP PHÂN",
+        question: "Làm tròn số 37,846 đến: Số tự nhiên gần nhất; Hàng phần mười; Hàng phần trăm được lần lượt là?",
+        options: [
+          "38 ; 37,8 và 37,84",
+          "37 ; 37,8 và 37,85",
+          "38 ; 37,8 và 37,85",
+          "38 ; 37,9 và 37,85"
+        ],
+        correctIndex: 2,
+        explanation: "• Đến số tự nhiên gần nhất: <strong>38</strong> (vì hàng phần mười là 8 ≥ 5).<br>• Đến hàng phần mười: <strong>37,8</strong> (vì hàng phần trăm là 4 < 5).<br>• Đến hàng phần trăm: <strong>37,85</strong> (vì hàng phần nghìn là 6 ≥ 5)."
+      },
+      {
+        id: 9,
+        topic: "II. SỐ THẬP PHÂN",
+        question: "Tính thuận tiện: a) 1538 + 845 + 462 + 155 ; b) 42 × 15 + 42 × 85. Kết quả lần lượt là?",
+        options: [
+          "3000 và 4200",
+          "2900 và 4200",
+          "3000 và 4100",
+          "3100 và 4200"
+        ],
+        correctIndex: 0,
+        explanation: "a) 1538 + 845 + 462 + 155 = (1538 + 462) + (845 + 155) = 2000 + 1000 = <strong>3000</strong>.<br>b) 42 × 15 + 42 × 85 = 42 × (15 + 85) = 42 × 100 = <strong>4200</strong>."
+      },
+      {
+        id: 10,
+        topic: "II. SỐ THẬP PHÂN",
+        question: "Một ô tô trong 2 giờ đi được 120 km. Với vận tốc đó, trong 4 giờ ô tô đi được bao nhiêu km?",
+        options: [
+          "180 km",
+          "220 km",
+          "240 km",
+          "200 km"
+        ],
+        correctIndex: 2,
+        explanation: "• Trong 1 giờ ô tô đi được quãng đường là: 120 : 2 = 60 (km).<br>• Trong 4 giờ ô tô đi được quãng đường là: 60 × 4 = <strong>240 (km)</strong>.<br>👉 Đáp số: 240 km."
+      },
+
+      // III. TÌM HAI SỐ KHI BIẾT TỔNG VÀ HIỆU (5 CÂU)
+      {
+        id: 11,
+        topic: "III. TỔNG & HIỆU",
+        question: "Tổng của hai số là 128, hiệu của hai số là 34. Tìm hai số đó (Số lớn và Số bé).",
+        options: [
+          "Số lớn: 81 ; Số bé: 47",
+          "Số lớn: 80 ; Số bé: 48",
+          "Số lớn: 85 ; Số bé: 43",
+          "Số lớn: 91 ; Số bé: 37"
+        ],
+        correctIndex: 0,
+        explanation: "• Bước 1: Tổng = 128, Hiệu = 34.<br>• Bước 2 (Số bé): (128 - 34) : 2 = <strong>47</strong>.<br>• Bước 3 (Số lớn): 47 + 34 = <strong>81</strong>.<br>👉 Đáp số: Số bé: 47; Số lớn: 81."
+      },
+      {
+        id: 12,
+        topic: "III. TỔNG & HIỆU",
+        question: "Hai lớp 5A và 5B thu được 245 kg giấy vụn. Lớp 5A thu nhiều hơn lớp 5B 35 kg. Mỗi lớp thu được?",
+        options: [
+          "5A: 135 kg ; 5B: 110 kg",
+          "5A: 140 kg ; 5B: 105 kg",
+          "5A: 150 kg ; 5B: 95 kg",
+          "5A: 145 kg ; 5B: 100 kg"
+        ],
+        correctIndex: 1,
+        explanation: "• Bước 1: Tổng = 245 kg, Hiệu = 35 kg.<br>• Bước 2 (Lớp 5B): (245 - 35) : 2 = <strong>105 (kg)</strong>.<br>• Bước 3 (Lớp 5A): 105 + 35 = <strong>140 (kg)</strong>.<br>👉 Đáp số: Lớp 5A: 140 kg; Lớp 5B: 105 kg."
+      },
+      {
+        id: 13,
+        topic: "III. TỔNG & HIỆU",
+        question: "Tuổi hai mẹ con cộng lại là 46 tuổi. Mẹ hơn con 28 tuổi. Hỏi hiện nay mẹ bao nhiêu tuổi, con bao nhiêu tuổi?",
+        options: [
+          "Mẹ: 36 tuổi ; Con: 10 tuổi",
+          "Mẹ: 38 tuổi ; Con: 8 tuổi",
+          "Mẹ: 37 tuổi ; Con: 9 tuổi",
+          "Mẹ: 39 tuổi ; Con: 7 tuổi"
+        ],
+        correctIndex: 2,
+        explanation: "• Bước 1: Tổng = 46 tuổi, Hiệu = 28 tuổi.<br>• Bước 2 (Tuổi con): (46 - 28) : 2 = <strong>9 (tuổi)</strong>.<br>• Bước 3 (Tuổi mẹ): 9 + 28 = <strong>37 (tuổi)</strong>.<br>👉 Đáp số: Mẹ: 37 tuổi; Con: 9 tuổi."
+      },
+      {
+        id: 14,
+        topic: "III. TỔNG & HIỆU",
+        question: "Thửa ruộng hình chữ nhật có chu vi 160 m. Chiều dài hơn chiều rộng 20 m. Tính chiều dài và chiều rộng.",
+        options: [
+          "Dài: 50 m ; Rộng: 30 m",
+          "Dài: 90 m ; Rộng: 70 m",
+          "Dài: 60 m ; Rộng: 40 m",
+          "Dài: 45 m ; Rộng: 35 m"
+        ],
+        correctIndex: 0,
+        explanation: "• Bước 1: Nửa chu vi (tổng dài và rộng) là: 160 : 2 = 80 (m).<br>• Bước 2 (Chiều rộng): (80 - 20) : 2 = <strong>30 (m)</strong>.<br>• Bước 3 (Chiều dài): 30 + 20 = <strong>50 (m)</strong>.<br>👉 Đáp số: Chiều dài: 50 m; Chiều rộng: 30 m."
+      },
+      {
+        id: 15,
+        topic: "III. TỔNG & HIỆU",
+        question: "Hai thùng chứa tất cả 350 lít dầu. Thùng thứ nhất hơn thùng thứ hai 50 lít dầu. Hỏi mỗi thùng chứa?",
+        options: [
+          "Thùng 1: 175 l ; Thùng 2: 175 l",
+          "Thùng 1: 225 l ; Thùng 2: 125 l",
+          "Thùng 1: 200 l ; Thùng 2: 150 l",
+          "Thùng 1: 210 l ; Thùng 2: 140 l"
+        ],
+        correctIndex: 2,
+        explanation: "• Bước 1: Tổng = 350 lít, Thùng 1 hơn Thùng 2 là 50 lít.<br>• Bước 2: Thùng thứ hai chứa: (350 - 50) : 2 = <strong>150 (lít)</strong>.<br>• Bước 3: Thùng thứ nhất chứa: 150 + 50 = <strong>200 (lít)</strong>.<br>👉 Đáp số: Thùng 1: 200 lít; Thùng 2: 150 lít."
+      },
+
+      // IV. ĐỔI ĐƠN VỊ ĐO (5 CÂU)
+      {
+        id: 16,
+        topic: "IV. ĐỔI ĐƠN VỊ ĐO",
+        question: "Viết số thập phân thích hợp: a) 4 m 85 cm = ... m ; b) 25 km 60 m = ... km. Ta được lần lượt là?",
+        options: [
+          "4,85 m và 25,6 km",
+          "4,85 m và 25,06 km",
+          "4,085 m và 25,006 km",
+          "48,5 m và 2,56 km"
+        ],
+        correctIndex: 1,
+        explanation: "a) 4 m 85 cm = <strong>4,85 m</strong> (vì 85 cm = 0,85 m).<br>b) 25 km 60 m = <strong>25,06 km</strong> (vì 60 m = 0,06 km).<br>(Lưu ý thêm: 720 mm = 0,72 m ; 3 dm 5 mm = 3,05 dm)."
+      },
+      {
+        id: 17,
+        topic: "IV. ĐỔI ĐƠN VỊ ĐO",
+        question: "Viết số thập phân thích hợp: a) 5 tấn 350 kg = ... tấn ; b) 2 tạ 8 kg = ... tạ. Ta được lần lượt là?",
+        options: [
+          "5,35 tấn và 2,8 tạ",
+          "5,35 tấn và 2,80 tạ",
+          "5,35 tấn và 2,08 tạ",
+          "5,035 tấn và 0,28 tạ"
+        ],
+        correctIndex: 2,
+        explanation: "a) 5 tấn 350 kg = <strong>5,35 tấn</strong>.<br>b) 2 tạ 8 kg = <strong>2,08 tạ</strong> (vì 8 kg = 8/100 tạ = 0,08 tạ).<br>(Lưu ý thêm: 450 g = 0,45 kg ; 6 kg 75 g = 6,075 kg)."
+      },
+      {
+        id: 18,
+        topic: "IV. ĐỔI ĐƠN VỊ ĐO",
+        question: "Viết số thập phân thích hợp: a) 8 m² 45 dm² = ... m² ; b) 12 ha = ... km². Ta được lần lượt là?",
+        options: [
+          "8,45 m² và 0,12 km²",
+          "8,045 m² và 1,2 km²",
+          "84,5 m² và 0,12 km²",
+          "845 m² và 12 km²"
+        ],
+        correctIndex: 0,
+        explanation: "a) 8 m² 45 dm² = <strong>8,45 m²</strong> (vì 45 dm² = 0,45 m²).<br>b) 12 ha = <strong>0,12 km²</strong> (vì 1 km² = 100 ha nên 12 ha = 12/100 km²).<br>(Lưu ý thêm: 350 dm² = 3,5 m² ; 4 cm² 5 mm² = 4,05 cm²)."
+      },
+      {
+        id: 19,
+        topic: "IV. ĐỔI ĐƠN VỊ ĐO",
+        question: "Điền dấu thích hợp: a) 3 m² 5 dm² ... 3,5 m² ; b) 2 tấn 50 kg ... 2,05 tấn. Dấu lần lượt là?",
+        options: [
+          "> và <",
+          "< và =",
+          "= và <",
+          "< và >"
+        ],
+        correctIndex: 1,
+        explanation: "a) 3 m² 5 dm² = 3,05 m² < 3,5 m² 👉 <strong><</strong><br>b) 2 tấn 50 kg = 2,05 tấn 👉 <strong>=</strong><br>(Lưu ý thêm: 4 km 80 m < 4,8 km ; 7 ha 600 m² = 7,06 ha)."
+      },
+      {
+        id: 20,
+        topic: "IV. ĐỔI ĐƠN VỊ ĐO",
+        question: "Sân trường HCN có dài 80 m, rộng 50 m. Tính diện tích theo m² và đổi sang héc-ta (ha).",
+        options: [
+          "400 m² ; 0,04 ha",
+          "4 000 m² ; 4 ha",
+          "4 000 m² ; 0,4 ha",
+          "40 000 m² ; 4 ha"
+        ],
+        correctIndex: 2,
+        explanation: "• Diện tích sân trường là: 80 × 50 = <strong>4 000 (m²)</strong>.<br>• Đổi sang héc-ta: vì 1 ha = 10 000 m² nên 4 000 m² = 4 000 : 10 000 = <strong>0,4 (ha)</strong>.<br>👉 Đáp số: a) 4 000 m² ; b) 0,4 ha."
+      }
+    ];
+
+    /* =================================================================
+       BỘ TỔNG HỢP ÂM THANH CÔNG NGHỆ CAO (WEB AUDIO API TỔNG HỢP NỘI TẠI)
+    ==================================================================== */
+    class FuturisticSoundFX {
+      constructor() {
+        this.ctx = null;
+        this.enabled = true;
+      }
+
+      initContext() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playTone(freq, type = 'sine', duration = 0.12, vol = 0.18) {
+        if (!this.enabled) return;
+        this.initContext();
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      }
+
+      playGrab() {
+        this.playTone(360, 'triangle', 0.08, 0.15);
+      }
+
+      playSuccess() {
+        if (!this.enabled) return;
+        this.initContext();
+        const now = this.ctx.currentTime;
+        // Chuỗi hợp âm ánh sáng C-Major Pentatonic
+        const chord = [523.25, 659.25, 783.99, 1046.50];
+        chord.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+          gain.gain.setValueAtTime(0.2, now + idx * 0.07);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.28);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.07);
+          osc.stop(now + idx * 0.07 + 0.28);
+        });
+      }
+
+      playWrong() {
+        if (!this.enabled) return;
+        this.initContext();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(170, now);
+        osc.frequency.exponentialRampToValueAtTime(80, now + 0.28);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.28);
+      }
+
+      playCombo() {
+        this.playTone(880, 'sine', 0.2, 0.25);
+        setTimeout(() => this.playTone(1320, 'sine', 0.3, 0.25), 90);
+      }
+    }
+
+    const sfx = new FuturisticSoundFX();
+
+    /* =================================================================
+       BỘ ĐIỀU KHIỂN TRẠNG THÁI TRÒ CHƠI (GAME STATE CONTROLLER)
+    ==================================================================== */
+    const state = {
+      index: 0,
+      score: 0,
+      combo: 0,
+      maxCombo: 0,
+      correctCount: 0,
+      total: GAME_DATA.length,
+      questionStartTime: Date.now(),
+      isDragging: false,
+      dragStartX: 0,
+      dragStartY: 0,
+      currentPosX: 0,
+      currentPosY: 0,
+      targetPortalIndex: null
+    };
+
+    // DOM Elements
+    const cardEl = document.getElementById('active-card');
+    const cardTagEl = document.getElementById('card-tag');
+    const cardTopicEl = document.getElementById('card-topic');
+    const cardContentEl = document.getElementById('card-content');
+    const hudScoreEl = document.getElementById('hud-score');
+    const hudComboEl = document.getElementById('hud-combo');
+    const barProgressEl = document.getElementById('bar-progress');
+    const txtProgressEl = document.getElementById('txt-progress');
+    const comboBannerEl = document.getElementById('combo-banner');
+    const stageEl = document.getElementById('game-stage');
+    const laserBeamEl = document.getElementById('laser-beam');
+    const portals = document.querySelectorAll('.energy-portal');
+
+    // Modals
+    const modalFeedback = document.getElementById('modal-feedback');
+    const feedbackTag = document.getElementById('feedback-tag');
+    const feedbackHeading = document.getElementById('feedback-heading');
+    const feedbackBody = document.getElementById('feedback-body');
+    const btnNextStage = document.getElementById('btn-next-stage');
+    const modalMissionComplete = document.getElementById('modal-mission-complete');
+    const btnRestart = document.getElementById('btn-restart');
+
+    /* =================================================================
+       NẠP CÂU HỎI LÊN BĂNG CHUYỀN
+    ==================================================================== */
+    function renderQuestion(idx) {
+      const q = GAME_DATA[idx];
+      state.questionStartTime = Date.now();
+
+      cardTagEl.textContent = `ĐĨA DỮ LIỆU SỐ ${String(idx + 1).padStart(2, '0')}`;
+      cardTopicEl.textContent = `CHỦ ĐỀ: ${q.topic}`;
+      cardContentEl.innerHTML = q.question;
+
+      // Nạp 4 lựa chọn vào 4 cổng
+      q.options.forEach((choiceText, i) => {
+        const choiceEl = document.getElementById(`choice-${i}`);
+        if (choiceEl) choiceEl.textContent = choiceText;
+      });
+
+      // Cập nhật thanh tiến trình
+      const pct = (idx / state.total) * 100;
+      barProgressEl.style.width = `${pct}%`;
+      txtProgressEl.textContent = `${idx + 1} / ${state.total}`;
+
+      // Reset thẻ về vị trí trung tâm
+      cardEl.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s';
+      cardEl.style.transform = 'translate(0px, 0px)';
+      cardEl.style.opacity = '1';
+      cardEl.classList.remove('dragging');
+      state.currentPosX = 0;
+      state.currentPosY = 0;
+    }
+
+    /* =================================================================
+       HỆ THỐNG KÉO THẢ TƯƠNG TÁC ĐA ĐIỂM (TOUCH & MOUSE)
+    ==================================================================== */
+    function setupInteractions() {
+      const onStart = (cx, cy) => {
+        state.isDragging = true;
+        state.dragStartX = cx - state.currentPosX;
+        state.dragStartY = cy - state.currentPosY;
+        cardEl.classList.add('dragging');
+        cardEl.style.transition = 'none';
+        sfx.playGrab();
+        laserBeamEl.setAttribute('opacity', '0.85');
+      };
+
+      const onMove = (cx, cy) => {
+        if (!state.isDragging) return;
+
+        state.currentPosX = cx - state.dragStartX;
+        state.currentPosY = cy - state.dragStartY;
+        cardEl.style.transform = `translate(${state.currentPosX}px, ${state.currentPosY}px) scale(1.05)`;
+
+        // Vẽ đường laze nối từ gốc thẻ đến trỏ chuột
+        const stageBox = stageEl.getBoundingClientRect();
+        const cardBox = cardEl.getBoundingClientRect();
+        const originX = cardBox.left + cardBox.width / 2 - stageBox.left;
+        const originY = cardBox.top + cardBox.height / 2 - stageBox.top;
+
+        laserBeamEl.setAttribute('x1', originX);
+        laserBeamEl.setAttribute('y1', originY);
+        laserBeamEl.setAttribute('x2', cx - stageBox.left);
+        laserBeamEl.setAttribute('y2', cy - stageBox.top);
+
+        checkPortalProximity(cx, cy);
+      };
+
+      const onEnd = () => {
+        if (!state.isDragging) return;
+        state.isDragging = false;
+        laserBeamEl.setAttribute('opacity', '0');
+        cardEl.classList.remove('dragging');
+
+        if (state.targetPortalIndex !== null) {
+          submitSelection(state.targetPortalIndex);
+        } else {
+          // Trả thẻ về băng chuyền nếu thả ngoài cổng
+          cardEl.style.transition = 'transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1)';
+          cardEl.style.transform = 'translate(0px, 0px)';
+          state.currentPosX = 0;
+          state.currentPosY = 0;
+        }
+
+        portals.forEach(p => p.classList.remove('drag-target-hover'));
+        state.targetPortalIndex = null;
+      };
+
+      // Sự kiện chuột máy tính
+      cardEl.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY));
+      window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+      window.addEventListener('mouseup', onEnd);
+
+      // Sự kiện cảm ứng (Màn hình thông minh / Tablet)
+      cardEl.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 0) onStart(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) onMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+
+      window.addEventListener('touchend', onEnd);
+
+      // Cho phép bấm trực tiếp vào cổng nếu dùng chuột hoặc học sinh tiểu học
+      portals.forEach((p) => {
+        p.addEventListener('click', () => {
+          const idx = parseInt(p.getAttribute('data-portal'), 10);
+          submitSelection(idx);
+        });
+      });
+    }
+
+    function checkPortalProximity(x, y) {
+      let hovered = null;
+      portals.forEach((portal) => {
+        const box = portal.getBoundingClientRect();
+        if (x >= box.left && x <= box.right && y >= box.top && y <= box.bottom) {
+          portal.classList.add('drag-target-hover');
+          hovered = parseInt(portal.getAttribute('data-portal'), 10);
+        } else {
+          portal.classList.remove('drag-target-hover');
+        }
+      });
+      state.targetPortalIndex = hovered;
+    }
+
+    /* =================================================================
+       ĐÁNH GIÁ ĐÁP ÁN, TÍNH ĐIỂM THƯỞNG VÀ HIỆU ỨNG COMBO
+    ==================================================================== */
+    function submitSelection(chosenIdx) {
+      const q = GAME_DATA[state.index];
+      const targetPortal = portals[chosenIdx];
+
+      if (chosenIdx === q.correctIndex) {
+        // == ĐÁP ÁN CHÍNH XÁC ==
+        sfx.playSuccess();
+        state.correctCount++;
+        state.combo++;
+        if (state.combo > state.maxCombo) state.maxCombo = state.combo;
+
+        // Tính điểm: 10 cơ bản + Combo bonus + Speed Bonus (< 10 giây)
+        const timeSpent = (Date.now() - state.questionStartTime) / 1000;
+        let gained = 10;
+        if (state.combo > 1) gained += (state.combo - 1) * 2;
+        if (timeSpent <= 10) gained += 5; // Speed Bonus
+
+        animateScoreAdd(gained);
+        hudComboEl.textContent = `x${state.combo}`;
+
+        // Hiệu ứng hạt điểm nổi lên
+        createFloatingScorePop(targetPortal, `+${gained}`);
+
+        // Kích hoạt Combo Hologram
+        showComboAlert(state.combo);
+
+        // Hiệu ứng hút thẻ dữ liệu vào cổng
+        const pBox = targetPortal.getBoundingClientRect();
+        const sBox = stageEl.getBoundingClientRect();
+        const toX = pBox.left + pBox.width / 2 - sBox.width / 2;
+        const toY = pBox.top + pBox.height / 2 - sBox.height / 2;
+
+        cardEl.style.transition = 'transform 0.4s ease-in, opacity 0.3s';
+        cardEl.style.transform = `translate(${toX}px, ${toY}px) scale(0.2)`;
+        cardEl.style.opacity = '0';
+
+        setTimeout(() => {
+          showFeedbackDialog(true, q);
+        }, 360);
+
+      } else {
+        // == ĐÁP ÁN CHƯA ĐÚNG ==
+        sfx.playWrong();
+        state.combo = 0;
+        hudComboEl.textContent = 'x0';
+
+        // Cổng rung cảnh báo
+        targetPortal.classList.add('portal-alert-shake');
+        setTimeout(() => targetPortal.classList.remove('portal-alert-shake'), 480);
+
+        // Trả thẻ về băng chuyền
+        cardEl.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        cardEl.style.transform = 'translate(0px, 0px)';
+        state.currentPosX = 0;
+        state.currentPosY = 0;
+
+        setTimeout(() => {
+          showFeedbackDialog(false, q);
+        }, 400);
+      }
+    }
+
+    function animateScoreAdd(amount) {
+      const start = state.score;
+      const end = start + amount;
+      state.score = end;
+      let cur = start;
+      const step = () => {
+        cur += Math.ceil((end - cur) / 4);
+        hudScoreEl.textContent = cur;
+        if (cur < end) {
+          requestAnimationFrame(step);
+        } else {
+          hudScoreEl.textContent = end;
+        }
+      };
+      step();
+    }
+
+    function createFloatingScorePop(elem, text) {
+      const box = elem.getBoundingClientRect();
+      const sBox = stageEl.getBoundingClientRect();
+      const pop = document.createElement('div');
+      pop.className = 'score-floating-pop';
+      pop.textContent = text;
+      pop.style.left = `${box.left + box.width / 2 - sBox.left - 24}px`;
+      pop.style.top = `${box.top - sBox.top - 12}px`;
+      stageEl.appendChild(pop);
+      setTimeout(() => pop.remove(), 950);
+    }
+
+    function showComboAlert(streak) {
+      if (streak < 2) return;
+      let label = `COMBO x${streak}!`;
+      if (streak >= 10) label = "ULTRA STREAK ⚡⚡";
+      else if (streak >= 8) label = "AI MASTER 👑";
+      else if (streak >= 5) label = "SUPER COMBO 🔥";
+      else if (streak >= 3) label = "COMBO x3 TRIPLE!";
+
+      comboBannerEl.textContent = label;
+      comboBannerEl.classList.add('active');
+      sfx.playCombo();
+      setTimeout(() => comboBannerEl.classList.remove('active'), 1250);
+    }
+
+    function showFeedbackDialog(isCorrect, questionObj) {
+      if (isCorrect) {
+        feedbackTag.className = 'dialog-status-tag tag-correct';
+        feedbackTag.textContent = 'CHÍNH XÁC HOÀN HẢO!';
+        feedbackHeading.textContent = 'DỮ LIỆU ĐÃ NẠP THÀNH CÔNG';
+      } else {
+        feedbackTag.className = 'dialog-status-tag tag-retry';
+        feedbackTag.textContent = 'THỬ LẠI NHÉ!';
+        feedbackHeading.textContent = 'GỢI Ý PHÂN TÍCH TOÁN HỌC';
+      }
+      feedbackBody.innerHTML = questionObj.explanation;
+      modalFeedback.classList.add('active');
+    }
+
+    btnNextStage.addEventListener('click', () => {
+      modalFeedback.classList.remove('active');
+      state.index++;
+      if (state.index < state.total) {
+        renderQuestion(state.index);
+      } else {
+        triggerMissionComplete();
+      }
+    });
+
+    /* =================================================================
+       MÀN HÌNH CHIẾN THẮNG MISSION COMPLETE & PHÁO HOA
+    ==================================================================== */
+    function triggerMissionComplete() {
+      barProgressEl.style.width = '100%';
+      txtProgressEl.textContent = '20 / 20 HOÀN THÀNH';
+
+      const accuracy = Math.round((state.correctCount / state.total) * 100);
+      document.getElementById('metric-score').textContent = state.score;
+      document.getElementById('metric-accuracy').textContent = `${accuracy}%`;
+      document.getElementById('metric-streak').textContent = `x${state.maxCombo}`;
+
+      let rank = "ĐẦU BẾP TOÁN HỌC 5 SAO ⭐⭐⭐⭐⭐";
+      if (accuracy === 100) rank = "👑 THẦN ĐỒNG TOÁN HỌC CYBER MASTER 👑";
+      else if (accuracy >= 80) rank = "⚡ CHUYÊN GIA DỮ LIỆU TOÁN CẤP CAO ⚡";
+      else rank = "🚀 CHIẾN BINH TOÁN HỌC TIỀM NĂNG 🚀";
+
+      document.getElementById('complete-rank').textContent = rank;
+      modalMissionComplete.classList.add('active');
+      startCelebrationCanvas();
+    }
+
+    btnRestart.addEventListener('click', () => {
+      modalMissionComplete.classList.remove('active');
+      stopCelebrationCanvas();
+      state.index = 0;
+      state.score = 0;
+      state.combo = 0;
+      state.maxCombo = 0;
+      state.correctCount = 0;
+      hudScoreEl.textContent = '0';
+      hudComboEl.textContent = 'x0';
+      renderQuestion(0);
+    });
+
+    /* =================================================================
+       HỆ THỐNG ĐỒ HỌA CANVAS MATRIX & PHÁO HOA LƯỢNG TỬ
+    ==================================================================== */
+    const bgCanvas = document.getElementById('bg-canvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let matrixParticles = [];
+
+    function setupMatrixBg() {
+      bgCanvas.width = stageEl.clientWidth;
+      bgCanvas.height = stageEl.clientHeight;
+      matrixParticles = [];
+      for (let i = 0; i < 50; i++) {
+        matrixParticles.push({
+          x: Math.random() * bgCanvas.width,
+          y: Math.random() * bgCanvas.height,
+          radius: Math.random() * 1.6 + 0.4,
+          alpha: Math.random(),
+          speed: Math.random() * 0.012 + 0.006
+        });
+      }
+    }
+
+    function renderMatrixBg() {
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      matrixParticles.forEach(p => {
+        p.alpha += p.speed;
+        if (p.alpha > 1 || p.alpha < 0.2) p.speed = -p.speed;
+        bgCtx.beginPath();
+        bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        bgCtx.fillStyle = `rgba(0, 243, 255, ${p.alpha * 0.45})`;
+        bgCtx.fill();
+      });
+      requestAnimationFrame(renderMatrixBg);
+    }
+
+    // Canvas Pháo hoa
+    const celebCanvas = document.getElementById('celebration-canvas');
+    const celebCtx = celebCanvas.getContext('2d');
+    let celebParts = [];
+    let celebTimer = null;
+
+    function startCelebrationCanvas() {
+      celebCanvas.width = stageEl.clientWidth;
+      celebCanvas.height = stageEl.clientHeight;
+      celebParts = [];
+      const colors = ['#00f3ff', '#b5179e', '#ffb703', '#00ffa3', '#ff007f'];
+
+      for (let i = 0; i < 140; i++) {
+        celebParts.push({
+          x: celebCanvas.width / 2,
+          y: celebCanvas.height / 2,
+          vx: (Math.random() - 0.5) * 18,
+          vy: (Math.random() - 0.5) * 18 - 3,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: Math.random() * 6 + 3,
+          alpha: 1,
+          decay: Math.random() * 0.015 + 0.008
+        });
+      }
+      renderCelebrationCanvas();
+    }
+
+    function renderCelebrationCanvas() {
+      celebCtx.clearRect(0, 0, celebCanvas.width, celebCanvas.height);
+      celebParts.forEach((p, idx) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.16;
+        p.alpha -= p.decay;
+        if (p.alpha > 0) {
+          celebCtx.beginPath();
+          celebCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          celebCtx.fillStyle = p.color;
+          celebCtx.globalAlpha = p.alpha;
+          celebCtx.shadowBlur = 12;
+          celebCtx.shadowColor = p.color;
+          celebCtx.fill();
+          celebCtx.globalAlpha = 1;
+        } else {
+          celebParts.splice(idx, 1);
+        }
+      });
+      if (celebParts.length > 0) {
+        celebTimer = requestAnimationFrame(renderCelebrationCanvas);
+      }
+    }
+
+    function stopCelebrationCanvas() {
+      if (celebTimer) cancelAnimationFrame(celebTimer);
+      celebCtx.clearRect(0, 0, celebCanvas.width, celebCanvas.height);
+      celebParts = [];
+    }
+
+    /* =================================================================
+       NÚT ĐIỀU KHIỂN ÂM THANH & TOÀN MÀN HÌNH
+    ==================================================================== */
+    const btnSound = document.getElementById('btn-sound');
+    btnSound.addEventListener('click', () => {
+      sfx.enabled = !sfx.enabled;
+      btnSound.textContent = sfx.enabled ? '🔊' : '🔇';
+      btnSound.style.borderColor = sfx.enabled ? 'var(--cyan)' : '#64748b';
+    });
+
+    const btnFullscreen = document.getElementById('btn-fullscreen');
+    btnFullscreen.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      setupMatrixBg();
+      celebCanvas.width = stageEl.clientWidth;
+      celebCanvas.height = stageEl.clientHeight;
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setupMatrixBg();
+      renderMatrixBg();
+      setupInteractions();
+      renderQuestion(0);
+    });
+  </script>
+</body>
+</html>
